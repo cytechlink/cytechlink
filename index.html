@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="cytechlink — ساخت دستیارها و سیستم‌های هوش مصنوعی برای مطب‌ها، هتل‌ها و کسب‌وکارها. خودکارسازی پاسخ‌گویی، نوبت‌دهی و پیگیری مشتری.">
+<meta name="theme-color" content="#0F2C4C">
+<title>cytechlink — هوش مصنوعی، ساده و قابل‌اعتماد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F1E9; --paper2:#EFEBE0; --white:#FCFBF7;
+  --ink:#0F2C4C; --teal:#12A594; --teal-d:#0E7F73; --gold:#C99A4E;
+  --char:#2A2D33; --muted:#6A6C72; --line:rgba(15,44,76,.12);
+  --radius:18px; --radius-lg:26px; --max:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Vazirmatn',sans-serif;background:var(--paper);color:var(--char);line-height:1.85;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.lat{font-family:'Plus Jakarta Sans',sans-serif;direction:ltr;display:inline-block;font-weight:700}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+h1,h2,h3{color:var(--ink);line-height:1.4;font-weight:800;letter-spacing:-.01em}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--teal-d);margin-bottom:14px}
+.eyebrow::before{content:"";width:18px;height:7px;background:
+  radial-gradient(circle 3.5px at 3.5px 3.5px,var(--ink) 99%,transparent) 0 0/9px 7px,
+  radial-gradient(circle 3.5px at 3.5px 3.5px,var(--teal) 99%,transparent) 9px 0/9px 7px;
+  background-repeat:no-repeat}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:16px;font-weight:600;padding:14px 26px;border-radius:999px;border:1.5px solid transparent;cursor:pointer;transition:transform .15s ease,background .2s ease,box-shadow .2s ease}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.btn-primary{background:var(--ink);color:#fff}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(15,44,76,.22)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{background:var(--paper2);transform:translateY(-2px)}
+.btn-gold{background:var(--gold);color:#3A2A0C}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(201,154,78,.3)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(244,241,233,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
+.brand{display:flex;align-items:center;gap:10px;font-size:21px}
+.brand .lat{font-size:21px}
+.brand .c1{color:var(--ink)}.brand .c2{color:var(--teal)}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-links a{font-size:15.5px;font-weight:500;color:var(--char);transition:color .15s}
+.nav-links a:hover{color:var(--teal-d)}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.burger{display:none;background:none;border:0;cursor:pointer;padding:6px}
+.burger span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:.25s}
+
+/* hero */
+.hero{padding:46px 0 52px;position:relative;overflow:hidden}
+#nodes{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.6;pointer-events:none}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(34px,5.6vw,62px);margin-bottom:22px;line-height:1.32}
+.hero h1 .l2{display:block;min-height:1.32em}
+.hero h1 .rot{color:var(--teal-d);white-space:nowrap}
+.hero h1 .caret{display:inline-block;width:3px;height:.82em;background:var(--gold);margin:0 3px;vertical-align:-1px;animation:blink 1.05s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.hero p.lead{font-size:19px;color:#3c4047;max-width:540px;margin-bottom:30px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.hero-note{margin-top:22px;font-size:14.5px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(18,165,148,.18)}50%{box-shadow:0 0 0 8px rgba(18,165,148,.04)}}
+.hf{opacity:0;transform:translateY(18px);animation:heroIn .9s cubic-bezier(.2,.7,.2,1) forwards}
+.hf2{animation-delay:.1s}.hf3{animation-delay:.2s}.hf4{animation-delay:.3s}
+@keyframes heroIn{to{opacity:1;transform:none}}
+
+/* phone + chat */
+.phone-stage{display:flex;justify-content:center;position:relative;z-index:1}
+.phone{width:316px;max-width:92%;background:#fff;border-radius:42px;padding:14px;box-shadow:0 44px 80px -30px rgba(15,44,76,.5);border:1px solid var(--line);position:relative;opacity:0;transform:translateY(26px) scale(.97);animation:heroIn 1s .25s cubic-bezier(.2,.7,.2,1) forwards}
+.phone::before{content:"";position:absolute;top:22px;left:50%;transform:translateX(-50%);width:92px;height:6px;border-radius:6px;background:#E6E2D6;z-index:2}
+.screen{background:var(--paper);border-radius:30px;padding:40px 12px 12px;height:460px;display:flex;flex-direction:column}
+.chat-head{display:flex;align-items:center;gap:10px;padding:0 4px 12px;margin-bottom:10px;border-bottom:1px solid var(--line)}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.chat-head .nm{font-size:14px;font-weight:600;color:var(--ink)}
+.chat-head .st{font-size:12px;color:var(--teal-d);display:flex;align-items:center;gap:5px}
+.chat-head .st i{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px rgba(18,165,148,.2);display:inline-block}
+.chat-feed{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:2px 4px}
+.chat-feed::-webkit-scrollbar{width:0}
+.bubble{max-width:85%;padding:9px 13px;border-radius:16px;font-size:13.5px;line-height:1.7;animation:pop .4s cubic-bezier(.2,.7,.2,1)}
+.bubble.them{background:#fff;border:1px solid var(--line);border-top-right-radius:5px;align-self:flex-start}
+.bubble.me{background:var(--ink);color:#fff;border-top-left-radius:5px;align-self:flex-end}
+.bubble .ok{color:#7BE0CE}
+.typing{display:flex;gap:4px;padding:12px 15px;background:#fff;border:1px solid var(--line);border-radius:16px;border-top-right-radius:5px;align-self:flex-start;width:fit-content}
+.typing span{width:7px;height:7px;border-radius:50%;background:#9aa3ad;animation:td 1.2s ease-in-out infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes td{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+.sugg{display:flex;gap:6px;flex-wrap:wrap;padding:8px 4px 6px}
+.sugg button{font-family:inherit;font-size:12px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:5px 11px;cursor:pointer;transition:.15s}
+.sugg button:hover{background:var(--ink);color:#fff}
+.chat-input{display:flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 14px 5px 5px;margin:0 2px}
+.chat-input input{flex:1;border:0;background:none;font-family:inherit;font-size:13.5px;color:var(--char);outline:none}
+.chat-input button{flex-shrink:0;width:34px;height:34px;border:0;border-radius:50%;background:var(--ink);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.chat-input button svg{width:16px;height:16px}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* section */
+section{padding:64px 0}
+.sec-head{max-width:680px;margin:0 auto 44px;text-align:center}
+.sec-head h2{font-size:clamp(26px,3.6vw,38px);margin-bottom:14px}
+.sec-head .eyebrow{justify-content:center}
+.sec-head p{color:var(--muted);font-size:17px}
+.type-on{visibility:hidden}.type-on.go{visibility:visible}
+
+/* trust */
+.trust{padding:30px 0;border-block:1px solid var(--line);background:var(--paper2)}
+.trust-in{display:flex;align-items:center;justify-content:center;gap:14px 40px;flex-wrap:wrap;text-align:center}
+.trust .lbl{font-size:14px;color:var(--muted)}
+.trust .item{display:flex;align-items:center;gap:9px;font-weight:600;color:var(--ink);font-size:15.5px}
+.trust .item svg{width:20px;height:20px;color:var(--teal-d)}
+
+/* cards */
+.grid{display:grid;gap:20px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:transform .2s ease,box-shadow .2s ease,border-color .2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 36px -22px rgba(15,44,76,.3);border-color:rgba(18,165,148,.4)}
+.ic{width:48px;height:48px;border-radius:13px;background:rgba(18,165,148,.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.ic svg{width:24px;height:24px;color:var(--teal-d)}
+.card h3{font-size:19px;margin-bottom:8px;font-weight:700}
+.card p{font-size:15px;color:var(--muted);line-height:1.8}
+
+/* product */
+.product{background:var(--ink);color:#fff}
+.product h2,.product h3{color:#fff}
+.product .eyebrow{color:#7BE0CE}
+.product .eyebrow::before{background:
+  radial-gradient(circle 3.5px at 3.5px 3.5px,#fff 99%,transparent) 0 0/9px 7px,
+  radial-gradient(circle 3.5px at 3.5px 3.5px,var(--gold) 99%,transparent) 9px 0/9px 7px;background-repeat:no-repeat}
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.prod-grid h2{font-size:clamp(26px,3.4vw,36px);margin-bottom:16px}
+.prod-grid .lead{color:#cdd6e0;font-size:17px;margin-bottom:26px}
+.faces{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.face{padding:8px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.22);font-size:14px;font-weight:600}
+.face.on{background:var(--gold);color:#3A2A0C;border-color:var(--gold)}
+.benefits{list-style:none;display:grid;gap:14px}
+.benefits li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;color:#e7ecf2}
+.benefits .chk{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:rgba(18,165,148,.25);display:flex;align-items:center;justify-content:center;margin-top:2px}
+.benefits .chk svg{width:14px;height:14px;color:#7BE0CE}
+.prod-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-lg);padding:28px}
+.stat{display:flex;align-items:baseline;gap:10px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.stat:last-child{border:0}
+.stat b{font-size:30px;color:var(--gold);font-family:'Plus Jakarta Sans',sans-serif}
+.stat span{font-size:15px;color:#cdd6e0}
+
+/* audience */
+.aud-card .tag{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--gold);font-weight:700;letter-spacing:.06em}
+.aud-card h3{margin:6px 0 10px}
+
+/* process */
+.process{background:var(--paper2)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.step{position:relative;padding-top:18px}
+.step .no{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;color:#fff;background:var(--ink);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.step h3{font-size:18px;margin-bottom:6px}
+.step p{font-size:14.5px;color:var(--muted)}
+.step:not(:last-child)::after{content:"";position:absolute;top:36px;left:-10px;width:calc(100% - 46px);height:2px;background:repeating-linear-gradient(to left,var(--line) 0 6px,transparent 6px 12px)}
+
+/* promise */
+.promise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.promise .p-item{text-align:center;padding:10px}
+.promise .p-ic{width:56px;height:56px;border-radius:16px;background:rgba(201,154,78,.16);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.promise .p-ic svg{width:28px;height:28px;color:var(--gold)}
+.promise h3{font-size:19px;margin-bottom:8px}
+.promise p{font-size:15px;color:var(--muted)}
+
+/* blog */
+.blog-card{padding:0;overflow:hidden}
+.blog-card .thumb{height:120px;background:linear-gradient(135deg,var(--ink),var(--teal-d))}
+.blog-card .thumb.t2{background:linear-gradient(135deg,var(--teal-d),var(--gold))}
+.blog-card .thumb.t3{background:linear-gradient(135deg,var(--gold),var(--ink))}
+.blog-card .body{padding:20px 22px 24px}
+.blog-card .cat{font-size:13px;color:var(--teal-d);font-weight:600;margin-bottom:8px;display:block}
+.blog-card h3{font-size:17px;margin-bottom:8px;line-height:1.6}
+.blog-card .more{font-size:14px;color:var(--ink);font-weight:600}
+
+/* final cta */
+.cta-final{text-align:center}
+.cta-box{background:var(--ink);color:#fff;border-radius:var(--radius-lg);padding:64px 32px;overflow:hidden}
+.cta-box h2{color:#fff;font-size:clamp(26px,3.6vw,40px);margin-bottom:14px}
+.cta-box p{color:#cdd6e0;max-width:520px;margin:0 auto 28px;font-size:17px}
+.cta-box .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* footer */
+.footer{background:var(--paper2);border-top:1px solid var(--line);padding:54px 0 28px}
+.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;margin-bottom:36px}
+.footer p.tag{color:var(--muted);font-size:15px;margin:14px 0 18px;max-width:300px}
+.socials{display:flex;gap:12px}
+.socials a{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);transition:.2s}
+.socials a:hover{background:var(--ink);color:#fff;transform:translateY(-2px)}
+.socials svg{width:19px;height:19px}
+.foot-col h4{font-size:14px;color:var(--ink);margin-bottom:14px;font-weight:700}
+.foot-col a{display:block;font-size:14.5px;color:var(--muted);margin-bottom:10px;transition:.15s}
+.foot-col a:hover{color:var(--teal-d)}
+.quote{text-align:center;padding:26px 0;border-block:1px solid var(--line);margin-bottom:22px}
+.quote p{font-size:18px;color:var(--ink);font-weight:500}
+.quote span{font-size:14px;color:var(--muted)}
+.copy{text-align:center;font-size:13.5px;color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:880px){
+  .hero-grid,.prod-grid,.foot-grid{grid-template-columns:1fr}
+  .g3,.steps,.promise-grid{grid-template-columns:1fr 1fr}
+  .phone-stage{order:-1;margin-bottom:6px}
+  .step:not(:last-child)::after{display:none}
+  .nav-links,.nav-cta .btn-ghost{display:none}
+  .burger{display:block}
+  .nav-links.open{display:flex;position:absolute;top:70px;right:0;left:0;flex-direction:column;background:var(--paper);padding:18px 24px;gap:16px;border-bottom:1px solid var(--line)}
+}
+@media(max-width:560px){
+  .g3,.steps,.promise-grid{grid-template-columns:1fr}
+  .hero{padding-top:30px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}.hf{opacity:1;transform:none}.phone{opacity:1;transform:none}
+  .type-on{visibility:visible}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a href="#" class="brand" aria-label="cytechlink خانه">
+      <svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><line x1="15" y1="24" x2="33" y2="24" stroke="#0F2C4C" stroke-width="4" stroke-linecap="round"/><circle cx="15" cy="24" r="7.5" fill="#0F2C4C"/><circle cx="33" cy="24" r="7.5" fill="#12A594"/></svg>
+      <span class="lat"><span class="c1">cytech</span><span class="c2">link</span></span>
+    </a>
+    <div class="nav-links" id="navlinks">
+      <a href="#services">خدمات</a>
+      <a href="#product">محصول</a>
+      <a href="#audience">برای چه کسانی</a>
+      <a href="#blog">بلاگ</a>
+      <a href="#contact">تماس</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">مشاوره‌ی رایگان</a>
+      <button class="burger" id="burger" aria-label="منو"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <canvas id="nodes" aria-hidden="true"></canvas>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow hf">هوش مصنوعی و اتوماسیون برای کسب‌وکار</span>
+      <h1 class="hf hf2">هوش مصنوعی،<span class="l2">دستیارِ <span class="rot" id="rot">مطب</span><span class="caret"></span> تو.</span></h1>
+      <p class="lead hf hf3">cytechlink دستیارهای هوش مصنوعی می‌سازه که ۲۴ ساعته جواب می‌دن، نوبت و رزرو می‌گیرن و مشتری رو نگه می‌دارن — تا تو به کارِ مهم‌ت برسی.</p>
+      <div class="hero-actions hf hf4">
+        <a href="#contact" class="btn btn-primary">مشاوره‌ی رایگان بگیر</a>
+        <a href="#product" class="btn btn-ghost">دیدن محصول</a>
+      </div>
+      <div class="hero-note hf hf4"><span class="dot"></span> راه‌اندازی سریع · پشتیبانی ماهانه · داده‌ات مال خودته</div>
+    </div>
+    <div class="phone-stage">
+      <div class="phone">
+        <div class="screen">
+          <div class="chat-head">
+            <div class="avatar"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><line x1="15" y1="24" x2="33" y2="24" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="15" cy="24" r="7.5" fill="#fff"/><circle cx="33" cy="24" r="7.5" fill="#12A594"/></svg></div>
+            <div><div class="nm">منشی هوشمند</div><div class="st"><i></i> آنلاین · پاسخ آنی</div></div>
+          </div>
+          <div class="chat-feed" id="feed" aria-live="polite"></div>
+          <div class="sugg" id="sugg">
+            <button data-q="نوبت">نوبت می‌خوام</button>
+            <button data-q="ساعت">ساعت کاری؟</button>
+            <button data-q="قیمت">هزینه ویزیت؟</button>
+          </div>
+          <div class="chat-input">
+            <input id="chatText" type="text" placeholder="پیامت رو بنویس…" aria-label="پیام به منشی هوشمند">
+            <button id="chatSend" aria-label="ارسال"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="trust">
+  <div class="wrap trust-in">
+    <span class="lbl">ساخته‌شده برای:</span>
+    <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18M5 6h14a2 2 0 012 2v11a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg> مطب‌ها و کلینیک‌ها</span>
+    <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3M9 9v.01M9 12v.01M9 15v.01"/></svg> بوتیک‌هتل‌ها</span>
+    <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h16M6 8v9a2 2 0 002 2h8a2 2 0 002-2V8M9 4h6M12 8v11"/></svg> کافه‌ها و کسب‌وکارها</span>
+  </div>
+</div>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">چه می‌سازم</span>
+      <h2 class="type-on">یک تیمِ کامل، در یک برند</h2>
+      <p>از ایده تا اجرا — هرچی برای دیجیتالی‌کردن و خودکارسازی کسب‌وکارت لازم داری.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2M9 9h6v6H9z"/></svg></div><h3>ایجنت‌های هوش مصنوعی</h3><p>دستیارهای هوشمندی که حرف می‌فهمن، تصمیم می‌گیرن و کار انجام می‌دن — نه فقط یک چت‌بات ساده.</p></div>
+      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4M8 8h8a2 2 0 012 2v8a2 2 0 01-2 2H8a2 2 0 01-2-2v-8a2 2 0 012-2zM9 14h.01M15 14h.01M3 13v2M21 13v2"/></svg></div><h3>بات‌ها و اتوماسیون</h3><p>بات‌های تلگرام، واتساپ و اینستاگرام و خودکارسازی فرایندهای تکراری با پایتون.</p></div>
+      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8M12 18v3"/></svg></div><h3>وب‌اپ و طراحی سایت</h3><p>سایت‌ها و وب‌اپ‌های سریع، مدرن و واکنش‌گرا که روی موبایل هم بی‌نقص کار می‌کنن.</p></div>
+      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22a10 10 0 010-20"/></svg></div><h3>گرافیک و برندینگ</h3><p>لوگو، هویت بصری و طراحی‌هایی که کسب‌وکارت رو حرفه‌ای و قابل‌اعتماد نشون می‌دن.</p></div>
+      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></div><h3>سئو و بلاگ آموزشی</h3><p>محتوای آموزشی و بهینه‌سازی برای موتورهای جستجو تا مشتری خودش پیدات کنه.</p></div>
+      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-8-8 18-2-7-8-3zM13 13l-2 8"/></svg></div><h3>دیجیتال مارکتینگ</h3><p>استراتژی محتوا برای اینستاگرام، لینکدین و یوتیوب تا برندت دیده بشه و رشد کنه.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="product" class="product">
+  <div class="wrap prod-grid">
+    <div>
+      <span class="eyebrow">محصول پرچم‌دار</span>
+      <h2 class="type-on">یک دستیار هوشمند، سه چهره</h2>
+      <p class="lead">یک موتور قدرتمند که برای هر کسب‌وکار، لباس خودش رو می‌پوشه و ۲۴ ساعته سرِ کاره.</p>
+      <div class="faces">
+        <span class="face on">منشی هوشمند مطب</span>
+        <span class="face">کنسیرژ هوشمند هتل</span>
+        <span class="face">دستیار سفارش کافه</span>
+      </div>
+      <ul class="benefits">
+        <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> به دایرکت و پیام‌های تکراری، آنی و شبانه‌روزی جواب می‌ده.</li>
+        <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> نوبت و رزرو می‌گیره و خودش مدیریت می‌کنه.</li>
+        <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> یادآور می‌فرسته تا غیبت و کنسلی کم بشه.</li>
+        <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> چندزبانه — برای مهمان‌های خارجیِ هتل‌ها.</li>
+      </ul>
+    </div>
+    <div class="prod-card reveal">
+      <div class="stat"><b>۲۴/۷</b><span>پاسخ‌گویی بدون وقفه، حتی نیمه‌شب</span></div>
+      <div class="stat"><b>−۴۰٪</b><span>کاهش غیبت بیمار با یادآوری خودکار</span></div>
+      <div class="stat"><b>۳×</b><span>سرعت بیشتر در پاسخ به مشتری</span></div>
+      <div class="stat"><b>۰</b><span>پیامِ بی‌جوابِ از دست‌رفته</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="audience">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">برای چه کسانی</span>
+      <h2 class="type-on">هر کسب‌وکار، یک راه‌حل</h2>
+      <p>محصول یکیه، ولی برای دردِ مشخصِ هر صنف، دقیق تنظیم می‌شه.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card aud-card reveal"><span class="tag">CLINICS</span><h3>مطب‌ها و کلینیک‌ها</h3><p>دیگه دایرکت‌های اینستاگرام بی‌جواب نمی‌مونه. منشی هوشمند نوبت می‌ده، به سوال بیمار جواب می‌ده و وقتِ منشی واقعی‌ات رو آزاد می‌کنه.</p></div>
+      <div class="card aud-card reveal"><span class="tag">HOTELS</span><h3>بوتیک‌هتل‌ها</h3><p>کنسیرژ هوشمندِ چندزبانه که به مهمان‌های داخلی و خارجی رزرو می‌ده، به سوال‌ها جواب می‌ده و تجربه‌ای پرمیوم می‌سازه.</p></div>
+      <div class="card aud-card reveal"><span class="tag">BUSINESS</span><h3>کافه‌ها و کسب‌وکارها</h3><p>سفارش‌گیری، رزرو میز و پاسخ به سوال‌های پرتکرار — همه خودکار، تا تو روی کیفیت تمرکز کنی.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">چطور پیش می‌ریم</span>
+      <h2 class="type-on">از گفت‌وگو تا تحویل، در ۴ قدم</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div class="no">۱</div><h3>مشاوره و نیازسنجی</h3><p>یک گفت‌وگوی رایگان تا بفهمم دقیقاً چه چیزی برات بیشترین ارزش رو می‌سازه.</p></div>
+      <div class="step reveal"><div class="no">۲</div><h3>طراحی و ساخت</h3><p>دستیار یا سیستم رو متناسب با کسب‌وکار تو طراحی و آماده می‌کنم.</p></div>
+      <div class="step reveal"><div class="no">۳</div><h3>راه‌اندازی</h3><p>روی کانال‌های خودت (اینستاگرام، واتساپ، سایت) نصب و فعال می‌شه.</p></div>
+      <div class="step reveal"><div class="no">۴</div><h3>پشتیبانی ماهانه</h3><p>به‌روزرسانی، بهبود و پشتیبانی همیشگی تا همه‌چی روان بمونه.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap promise">
+    <div class="sec-head">
+      <span class="eyebrow">قولِ cytechlink</span>
+      <h2 class="type-on">تکنولوژیِ پیچیده، تجربه‌ی ساده</h2>
+    </div>
+    <div class="promise-grid">
+      <div class="p-item reveal"><div class="p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>داده‌ات مال خودته</h3><p>اطلاعات کسب‌وکار و مشتری‌هات همیشه در کنترل خودته — بدون استثنا.</p></div>
+      <div class="p-item reveal"><div class="p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div><h3>تحویل سریع</h3><p>راه‌اندازیِ چابک و مرحله‌به‌مرحله — نتیجه رو زود می‌بینی، نه چند ماه دیگه.</p></div>
+      <div class="p-item reveal"><div class="p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h3>پشتیبانی واقعی</h3><p>یک آدم واقعی پشت برنده — نه تیکتِ بی‌جواب و رباتِ سرگردان.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="blog">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">از بلاگ</span>
+      <h2 class="type-on">یاد بگیر، رشد کن</h2>
+      <p>راهنماهای کاربردی درباره‌ی هوش مصنوعی، اتوماسیون و رشد کسب‌وکار.</p>
+    </div>
+    <div class="grid g3">
+      <a href="#" class="card blog-card reveal"><div class="thumb"></div><div class="body"><span class="cat">هوش مصنوعی</span><h3>چطور یک منشی هوشمند، مطبت رو متحول می‌کنه؟</h3><span class="more">ادامه ←</span></div></a>
+      <a href="#" class="card blog-card reveal"><div class="thumb t2"></div><div class="body"><span class="cat">اتوماسیون</span><h3>۵ کار تکراری که همین امروز می‌تونی خودکار کنی</h3><span class="more">ادامه ←</span></div></a>
+      <a href="#" class="card blog-card reveal"><div class="thumb t3"></div><div class="body"><span class="cat">رشد کسب‌وکار</span><h3>راهنمای سئو برای کسب‌وکارهای محلی در ۲۰۲۶</h3><span class="more">ادامه ←</span></div></a>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="cta-final">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <h2>آماده‌ای کسب‌وکارت رو خودکار کنی؟</h2>
+      <p>یک گفت‌وگوی کوتاه و رایگان، تا ببینیم هوش مصنوعی دقیقاً کجا می‌تونه برات وقت و مشتری بسازه.</p>
+      <div class="actions">
+        <a href="https://wa.me/+989106666902" class="btn btn-gold">شروع گفت‌وگو در واتساپ</a>
+        <a href="mailto:huxuniverse@gmail.com" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.3)">ایمیل بزن</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" id="footer">
+  <div class="wrap">
+    <div class="quote">
+      <p>«بهترین راه برای پیش‌بینی آینده، ساختنِ آن است.»</p>
+      <span>— آلن کی</span>
+    </div>
+    <div class="foot-grid">
+      <div>
+        <a href="#" class="brand"><svg width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><line x1="15" y1="24" x2="33" y2="24" stroke="#0F2C4C" stroke-width="4" stroke-linecap="round"/><circle cx="15" cy="24" r="7.5" fill="#0F2C4C"/><circle cx="33" cy="24" r="7.5" fill="#12A594"/></svg><span class="lat"><span class="c1">cytech</span><span class="c2">link</span></span></a>
+        <p class="tag">دستیارها و سیستم‌های هوش مصنوعی برای مطب‌ها، هتل‌ها و کسب‌وکارها. شیراز، ایران — و همه‌جای دنیا.</p>
+        <div class="socials">
+          <a href="https://github.com/cytechlink" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 015 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 3.9-1.3 6.8-5.1 6.8-9.6C22 6.6 17.5 2 12 2z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zM8.5 18H6V10h2.5v8zM7.2 8.8a1.4 1.4 0 110-2.8 1.4 1.4 0 010 2.8zM18 18h-2.5v-4.2c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7V18H10s.03-7.3 0-8h2.5v1.1c.3-.5.9-1.3 2.3-1.3 1.7 0 3 1.1 3 3.5V18z"/></svg></a>
+          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7c-.2-.8-.9-1.5-1.7-1.7C19.4 5.2 12 5.2 12 5.2s-7.4 0-8.9.4c-.8.2-1.5.9-1.7 1.7C1 8.8 1 12 1 12s0 3.2.4 4.7c.2.8.9 1.5 1.7 1.7 1.5.4 8.9.4 8.9.4s7.4 0 8.9-.4c.8-.2 1.5-.9 1.7-1.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col"><h4>خدمات</h4><a href="#product">منشی هوشمند مطب</a><a href="#product">کنسیرژ هتل</a><a href="#services">طراحی سایت و وب‌اپ</a><a href="#services">دیجیتال مارکتینگ</a></div>
+      <div class="foot-col"><h4>ارتباط</h4><a href="mailto:hello@cytechlink.com">hello@cytechlink.com</a><a href="#">واتساپ: [شماره‌ات]</a><a href="#blog">بلاگ</a><a href="#contact">مشاوره‌ی رایگان</a></div>
+    </div>
+    <p class="copy">© ۲۰۲۶ cytechlink — ساخته‌شده با دقت در شیراز.</p>
+  </div>
+</footer>
+
+<script>
+const RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* mobile nav */
+const burger=document.getElementById('burger'),nav=document.getElementById('navlinks');
+burger&&burger.addEventListener('click',()=>nav.classList.toggle('open'));
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
+
+/* scroll reveal */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* typewriter rotating word in hero */
+const rotEl=document.getElementById('rot');
+const words=['مطب','هتل','کافه','کلینیک','کسب‌وکار'];
+if(rotEl&&!RM){
+  let wi=0,ci=0,del=false;
+  rotEl.textContent='';
+  (function tick(){
+    const w=words[wi];
+    rotEl.textContent=del?w.slice(0,--ci):w.slice(0,++ci);
+    let d=del?55:110;
+    if(!del&&ci===w.length){d=1300;del=true}
+    else if(del&&ci===0){del=false;wi=(wi+1)%words.length;d=300}
+    setTimeout(tick,d);
+  })();
+}
+
+/* section titles type-on scroll */
+const tio=new IntersectionObserver(es=>es.forEach(e=>{
+  if(!e.isIntersecting)return;
+  const el=e.target;tio.unobserve(el);
+  if(RM){el.classList.add('go');return}
+  const txt=el.textContent;el.textContent='';el.classList.add('go');
+  let i=0;(function t(){el.textContent=txt.slice(0,i++);if(i<=txt.length)setTimeout(t,28)})();
+}),{threshold:.6});
+document.querySelectorAll('.type-on').forEach(el=>tio.observe(el));
+
+/* node network canvas */
+(function(){
+  const c=document.getElementById('nodes');if(!c)return;
+  const ctx=c.getContext('2d');let w,h,pts,raf;
+  const ink='15,44,76',teal='18,165,148';
+  function size(){const r=c.parentElement.getBoundingClientRect();w=c.width=r.width;h=c.height=r.height;
+    const n=Math.min(46,Math.floor(w/26));
+    pts=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.32,vy:(Math.random()-.5)*.32,r:Math.random()*1.8+1.2}));}
+  function draw(){ctx.clearRect(0,0,w,h);
+    for(let i=0;i<pts.length;i++){const p=pts[i];
+      for(let j=i+1;j<pts.length;j++){const q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.hypot(dx,dy);
+        if(d<128){ctx.strokeStyle='rgba('+ink+','+(.16*(1-d/128))+')';ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();}}
+      p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;
+      ctx.fillStyle=i%4===0?'rgba('+teal+',.85)':'rgba('+ink+',.5)';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill();}
+    raf=requestAnimationFrame(draw);}
+  size();if(RM){draw();cancelAnimationFrame(raf);draw();}else draw();
+  addEventListener('resize',()=>{cancelAnimationFrame(raf);size();draw();});
+})();
+
+/* interactive chat */
+(function(){
+  const feed=document.getElementById('feed'),input=document.getElementById('chatText'),send=document.getElementById('chatSend'),sugg=document.getElementById('sugg');
+  if(!feed)return;
+  const scroll=()=>feed.scrollTop=feed.scrollHeight;
+  function bubble(text,who){const b=document.createElement('div');b.className='bubble '+who;b.innerHTML=text;feed.appendChild(b);scroll();}
+  function typing(cb){const t=document.createElement('div');t.className='typing';t.innerHTML='<span></span><span></span><span></span>';feed.appendChild(t);scroll();
+    setTimeout(()=>{t.remove();cb();},RM?200:900);}
+  function reply(q){
+    q=q.trim();
+    let a="خوشحال می‌شم کمک کنم! می‌تونی نوبت بگیری، ساعت کاری بپرسی یا درباره‌ی هزینه‌ها سوال کنی. 🌿";
+    if(/نوبت|وقت|رزرو/.test(q))a="حتماً! فردا ساعت ۱۰:۰۰ و ۱۱:۳۰ خالیه. کدوم رو ثبت کنم؟ <span class='ok'>✓</span>";
+    else if(/ساعت|کار|باز/.test(q))a="ما همه‌روزه از ۹ صبح تا ۸ شب باز هستیم — جمعه‌ها تا ۲ بعدازظهر.";
+    else if(/قیمت|هزینه|تعرفه|چند/.test(q))a="هزینه‌ی ویزیت بسته به نوع خدماته. اگه بخوای، الان دقیقش رو برات می‌فرستم و نوبت هم می‌ذارم.";
+    else if(/سلام|درود|خوبی/.test(q))a="سلام! من منشی هوشمندِ این مطبم، ۲۴ ساعته در خدمتم. چه کاری برات انجام بدم؟";
+    typing(()=>bubble(a,'them'));
+  }
+  function user(q){bubble(q,'me');reply(q);}
+  send.addEventListener('click',()=>{const v=input.value;if(!v.trim())return;input.value='';user(v);});
+  input.addEventListener('keydown',e=>{if(e.key==='Enter'){const v=input.value;if(!v.trim())return;input.value='';user(v);}});
+  sugg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>user(b.dataset.q==='نوبت'?'نوبت می‌خوام':b.dataset.q==='ساعت'?'ساعت کاری شما؟':'هزینه ویزیت چقدره؟')));
+  /* autoplay intro */
+  const intro=[['سلام، برای فردا وقت ویزیت دارید؟','them'],['سلام! بله، فردا ساعت ۱۰:۰۰ و ۱۱:۳۰ خالیه. کدوم رو رزرو کنم؟','me'],['ساعت ۱۰ لطفاً','them'],["<span class='ok'>✓</span> ثبت شد. یادآوری رو فردا صبح براتون می‌فرستم 🌿",'me']];
+  let k=0;(function play(){if(k>=intro.length)return;const[t,who]=intro[k++];
+    if(who==='them'&&!RM){typing(()=>{bubble(t,who);setTimeout(play,500);});}
+    else{bubble(t,who);setTimeout(play,RM?150:650);}})();
+})();
+</script>
+</body>
+</html>
