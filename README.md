@@ -1,13 +1,11 @@
 <div align="center">
 
-<!-- نشان برند: دو نقطه‌ی متصل = مفهوم link -->
 <img src="https://img.shields.io/badge/●%20%E2%94%80%20●-cytechlink-0F2C4C?style=for-the-badge&labelColor=12A594" alt="cytechlink" height="34"/>
 
 # cytechlink
 
 ### 🤖 AI assistants & automation for clinics, hotels & businesses
 
-<!-- این هدر تایپ‌شونده با تم سایت ست — اگه نخواستی، این خط رو پاک کن -->
 <img src="https://readme-typing-svg.demolab.com?font=Plus+Jakarta+Sans&weight=600&size=22&pause=1200&color=12A594&center=true&vCenter=true&width=520&lines=Smart+automation%2C+simply+done.;AI+that+runs+your+front+desk.;Book%2C+reply+%26+follow+up+%E2%80%94+24%2F7." alt="typing tagline"/>
 
 <br/>
@@ -22,7 +20,7 @@
 
 ---
 
-👋 Hi — I'm **[نام شما]**, the founder of **cytechlink**.
+👋 Hi — I'm Alireza, the founder of **cytechlink**.
 
 I build **AI assistants and automations** that take care of the repetitive work — answering messages, booking appointments, and following up with customers — so businesses can focus on what actually matters.
 
