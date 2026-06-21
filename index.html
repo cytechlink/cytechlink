@@ -1,519 +1,1379 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="cytechlink — ساخت دستیارها و سیستم‌های هوش مصنوعی برای مطب‌ها، هتل‌ها و کسب‌وکارها. خودکارسازی پاسخ‌گویی، نوبت‌دهی و پیگیری مشتری.">
-<meta name="theme-color" content="#0F2C4C">
-<title>cytechlink — هوش مصنوعی، ساده و قابل‌اعتماد</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --paper:#F4F1E9; --paper2:#EFEBE0; --white:#FCFBF7;
-  --ink:#0F2C4C; --teal:#12A594; --teal-d:#0E7F73; --gold:#C99A4E;
-  --char:#2A2D33; --muted:#6A6C72; --line:rgba(15,44,76,.12);
-  --radius:18px; --radius-lg:26px; --max:1120px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Vazirmatn',sans-serif;background:var(--paper);color:var(--char);line-height:1.85;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-.lat{font-family:'Plus Jakarta Sans',sans-serif;direction:ltr;display:inline-block;font-weight:700}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
-h1,h2,h3{color:var(--ink);line-height:1.4;font-weight:800;letter-spacing:-.01em}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--teal-d);margin-bottom:14px}
-.eyebrow::before{content:"";width:18px;height:7px;background:
-  radial-gradient(circle 3.5px at 3.5px 3.5px,var(--ink) 99%,transparent) 0 0/9px 7px,
-  radial-gradient(circle 3.5px at 3.5px 3.5px,var(--teal) 99%,transparent) 9px 0/9px 7px;
-  background-repeat:no-repeat}
-.btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:16px;font-weight:600;padding:14px 26px;border-radius:999px;border:1.5px solid transparent;cursor:pointer;transition:transform .15s ease,background .2s ease,box-shadow .2s ease}
-.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-.btn-primary{background:var(--ink);color:#fff}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(15,44,76,.22)}
-.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
-.btn-ghost:hover{background:var(--paper2);transform:translateY(-2px)}
-.btn-gold{background:var(--gold);color:#3A2A0C}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(201,154,78,.3)}
-
-/* nav */
-.nav{position:sticky;top:0;z-index:50;background:rgba(244,241,233,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;height:70px}
-.brand{display:flex;align-items:center;gap:10px;font-size:21px}
-.brand .lat{font-size:21px}
-.brand .c1{color:var(--ink)}.brand .c2{color:var(--teal)}
-.nav-links{display:flex;align-items:center;gap:30px}
-.nav-links a{font-size:15.5px;font-weight:500;color:var(--char);transition:color .15s}
-.nav-links a:hover{color:var(--teal-d)}
-.nav-cta{display:flex;align-items:center;gap:12px}
-.burger{display:none;background:none;border:0;cursor:pointer;padding:6px}
-.burger span{display:block;width:24px;height:2px;background:var(--ink);margin:5px 0;transition:.25s}
-
-/* hero */
-.hero{padding:46px 0 52px;position:relative;overflow:hidden}
-#nodes{position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.6;pointer-events:none}
-.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
-.hero h1{font-size:clamp(34px,5.6vw,62px);margin-bottom:22px;line-height:1.32}
-.hero h1 .l2{display:block;min-height:1.32em}
-.hero h1 .rot{color:var(--teal-d);white-space:nowrap}
-.hero h1 .caret{display:inline-block;width:3px;height:.82em;background:var(--gold);margin:0 3px;vertical-align:-1px;animation:blink 1.05s step-end infinite}
-@keyframes blink{50%{opacity:0}}
-.hero p.lead{font-size:19px;color:#3c4047;max-width:540px;margin-bottom:30px}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
-.hero-note{margin-top:22px;font-size:14.5px;color:var(--muted);display:flex;align-items:center;gap:8px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--teal);display:inline-block;animation:pulse 2s ease-in-out infinite}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(18,165,148,.18)}50%{box-shadow:0 0 0 8px rgba(18,165,148,.04)}}
-.hf{opacity:0;transform:translateY(18px);animation:heroIn .9s cubic-bezier(.2,.7,.2,1) forwards}
-.hf2{animation-delay:.1s}.hf3{animation-delay:.2s}.hf4{animation-delay:.3s}
-@keyframes heroIn{to{opacity:1;transform:none}}
-
-/* phone + chat */
-.phone-stage{display:flex;justify-content:center;position:relative;z-index:1}
-.phone{width:316px;max-width:92%;background:#fff;border-radius:42px;padding:14px;box-shadow:0 44px 80px -30px rgba(15,44,76,.5);border:1px solid var(--line);position:relative;opacity:0;transform:translateY(26px) scale(.97);animation:heroIn 1s .25s cubic-bezier(.2,.7,.2,1) forwards}
-.phone::before{content:"";position:absolute;top:22px;left:50%;transform:translateX(-50%);width:92px;height:6px;border-radius:6px;background:#E6E2D6;z-index:2}
-.screen{background:var(--paper);border-radius:30px;padding:40px 12px 12px;height:460px;display:flex;flex-direction:column}
-.chat-head{display:flex;align-items:center;gap:10px;padding:0 4px 12px;margin-bottom:10px;border-bottom:1px solid var(--line)}
-.avatar{width:38px;height:38px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.chat-head .nm{font-size:14px;font-weight:600;color:var(--ink)}
-.chat-head .st{font-size:12px;color:var(--teal-d);display:flex;align-items:center;gap:5px}
-.chat-head .st i{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 3px rgba(18,165,148,.2);display:inline-block}
-.chat-feed{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:9px;padding:2px 4px}
-.chat-feed::-webkit-scrollbar{width:0}
-.bubble{max-width:85%;padding:9px 13px;border-radius:16px;font-size:13.5px;line-height:1.7;animation:pop .4s cubic-bezier(.2,.7,.2,1)}
-.bubble.them{background:#fff;border:1px solid var(--line);border-top-right-radius:5px;align-self:flex-start}
-.bubble.me{background:var(--ink);color:#fff;border-top-left-radius:5px;align-self:flex-end}
-.bubble .ok{color:#7BE0CE}
-.typing{display:flex;gap:4px;padding:12px 15px;background:#fff;border:1px solid var(--line);border-radius:16px;border-top-right-radius:5px;align-self:flex-start;width:fit-content}
-.typing span{width:7px;height:7px;border-radius:50%;background:#9aa3ad;animation:td 1.2s ease-in-out infinite}
-.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
-@keyframes td{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
-.sugg{display:flex;gap:6px;flex-wrap:wrap;padding:8px 4px 6px}
-.sugg button{font-family:inherit;font-size:12px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:5px 11px;cursor:pointer;transition:.15s}
-.sugg button:hover{background:var(--ink);color:#fff}
-.chat-input{display:flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:999px;padding:5px 14px 5px 5px;margin:0 2px}
-.chat-input input{flex:1;border:0;background:none;font-family:inherit;font-size:13.5px;color:var(--char);outline:none}
-.chat-input button{flex-shrink:0;width:34px;height:34px;border:0;border-radius:50%;background:var(--ink);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.chat-input button svg{width:16px;height:16px}
-@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
-/* section */
-section{padding:64px 0}
-.sec-head{max-width:680px;margin:0 auto 44px;text-align:center}
-.sec-head h2{font-size:clamp(26px,3.6vw,38px);margin-bottom:14px}
-.sec-head .eyebrow{justify-content:center}
-.sec-head p{color:var(--muted);font-size:17px}
-.type-on{visibility:hidden}.type-on.go{visibility:visible}
-
-/* trust */
-.trust{padding:30px 0;border-block:1px solid var(--line);background:var(--paper2)}
-.trust-in{display:flex;align-items:center;justify-content:center;gap:14px 40px;flex-wrap:wrap;text-align:center}
-.trust .lbl{font-size:14px;color:var(--muted)}
-.trust .item{display:flex;align-items:center;gap:9px;font-weight:600;color:var(--ink);font-size:15.5px}
-.trust .item svg{width:20px;height:20px;color:var(--teal-d)}
-
-/* cards */
-.grid{display:grid;gap:20px}
-.g3{grid-template-columns:repeat(3,1fr)}
-.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:26px;transition:transform .2s ease,box-shadow .2s ease,border-color .2s}
-.card:hover{transform:translateY(-4px);box-shadow:0 18px 36px -22px rgba(15,44,76,.3);border-color:rgba(18,165,148,.4)}
-.ic{width:48px;height:48px;border-radius:13px;background:rgba(18,165,148,.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px}
-.ic svg{width:24px;height:24px;color:var(--teal-d)}
-.card h3{font-size:19px;margin-bottom:8px;font-weight:700}
-.card p{font-size:15px;color:var(--muted);line-height:1.8}
-
-/* product */
-.product{background:var(--ink);color:#fff}
-.product h2,.product h3{color:#fff}
-.product .eyebrow{color:#7BE0CE}
-.product .eyebrow::before{background:
-  radial-gradient(circle 3.5px at 3.5px 3.5px,#fff 99%,transparent) 0 0/9px 7px,
-  radial-gradient(circle 3.5px at 3.5px 3.5px,var(--gold) 99%,transparent) 9px 0/9px 7px;background-repeat:no-repeat}
-.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
-.prod-grid h2{font-size:clamp(26px,3.4vw,36px);margin-bottom:16px}
-.prod-grid .lead{color:#cdd6e0;font-size:17px;margin-bottom:26px}
-.faces{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
-.face{padding:8px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.22);font-size:14px;font-weight:600}
-.face.on{background:var(--gold);color:#3A2A0C;border-color:var(--gold)}
-.benefits{list-style:none;display:grid;gap:14px}
-.benefits li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;color:#e7ecf2}
-.benefits .chk{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:rgba(18,165,148,.25);display:flex;align-items:center;justify-content:center;margin-top:2px}
-.benefits .chk svg{width:14px;height:14px;color:#7BE0CE}
-.prod-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--radius-lg);padding:28px}
-.stat{display:flex;align-items:baseline;gap:10px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.12)}
-.stat:last-child{border:0}
-.stat b{font-size:30px;color:var(--gold);font-family:'Plus Jakarta Sans',sans-serif}
-.stat span{font-size:15px;color:#cdd6e0}
-
-/* audience */
-.aud-card .tag{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--gold);font-weight:700;letter-spacing:.06em}
-.aud-card h3{margin:6px 0 10px}
-
-/* process */
-.process{background:var(--paper2)}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.step{position:relative;padding-top:18px}
-.step .no{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;color:#fff;background:var(--ink);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-.step h3{font-size:18px;margin-bottom:6px}
-.step p{font-size:14.5px;color:var(--muted)}
-.step:not(:last-child)::after{content:"";position:absolute;top:36px;left:-10px;width:calc(100% - 46px);height:2px;background:repeating-linear-gradient(to left,var(--line) 0 6px,transparent 6px 12px)}
-
-/* promise */
-.promise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.promise .p-item{text-align:center;padding:10px}
-.promise .p-ic{width:56px;height:56px;border-radius:16px;background:rgba(201,154,78,.16);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
-.promise .p-ic svg{width:28px;height:28px;color:var(--gold)}
-.promise h3{font-size:19px;margin-bottom:8px}
-.promise p{font-size:15px;color:var(--muted)}
-
-/* blog */
-.blog-card{padding:0;overflow:hidden}
-.blog-card .thumb{height:120px;background:linear-gradient(135deg,var(--ink),var(--teal-d))}
-.blog-card .thumb.t2{background:linear-gradient(135deg,var(--teal-d),var(--gold))}
-.blog-card .thumb.t3{background:linear-gradient(135deg,var(--gold),var(--ink))}
-.blog-card .body{padding:20px 22px 24px}
-.blog-card .cat{font-size:13px;color:var(--teal-d);font-weight:600;margin-bottom:8px;display:block}
-.blog-card h3{font-size:17px;margin-bottom:8px;line-height:1.6}
-.blog-card .more{font-size:14px;color:var(--ink);font-weight:600}
-
-/* final cta */
-.cta-final{text-align:center}
-.cta-box{background:var(--ink);color:#fff;border-radius:var(--radius-lg);padding:64px 32px;overflow:hidden}
-.cta-box h2{color:#fff;font-size:clamp(26px,3.6vw,40px);margin-bottom:14px}
-.cta-box p{color:#cdd6e0;max-width:520px;margin:0 auto 28px;font-size:17px}
-.cta-box .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-
-/* footer */
-.footer{background:var(--paper2);border-top:1px solid var(--line);padding:54px 0 28px}
-.foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;margin-bottom:36px}
-.footer p.tag{color:var(--muted);font-size:15px;margin:14px 0 18px;max-width:300px}
-.socials{display:flex;gap:12px}
-.socials a{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--ink);transition:.2s}
-.socials a:hover{background:var(--ink);color:#fff;transform:translateY(-2px)}
-.socials svg{width:19px;height:19px}
-.foot-col h4{font-size:14px;color:var(--ink);margin-bottom:14px;font-weight:700}
-.foot-col a{display:block;font-size:14.5px;color:var(--muted);margin-bottom:10px;transition:.15s}
-.foot-col a:hover{color:var(--teal-d)}
-.quote{text-align:center;padding:26px 0;border-block:1px solid var(--line);margin-bottom:22px}
-.quote p{font-size:18px;color:var(--ink);font-weight:500}
-.quote span{font-size:14px;color:var(--muted)}
-.copy{text-align:center;font-size:13.5px;color:var(--muted)}
-
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-.reveal.in{opacity:1;transform:none}
-
-@media(max-width:880px){
-  .hero-grid,.prod-grid,.foot-grid{grid-template-columns:1fr}
-  .g3,.steps,.promise-grid{grid-template-columns:1fr 1fr}
-  .phone-stage{order:-1;margin-bottom:6px}
-  .step:not(:last-child)::after{display:none}
-  .nav-links,.nav-cta .btn-ghost{display:none}
-  .burger{display:block}
-  .nav-links.open{display:flex;position:absolute;top:70px;right:0;left:0;flex-direction:column;background:var(--paper);padding:18px 24px;gap:16px;border-bottom:1px solid var(--line)}
-}
-@media(max-width:560px){
-  .g3,.steps,.promise-grid{grid-template-columns:1fr}
-  .hero{padding-top:30px}
-}
-@media(prefers-reduced-motion:reduce){
-  *{animation:none!important;scroll-behavior:auto}
-  .reveal{opacity:1;transform:none}.hf{opacity:1;transform:none}.phone{opacity:1;transform:none}
-  .type-on{visibility:visible}
-}
-</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
 <body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;family=Vazirmatn:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+html,body{margin:0;padding:0;background:#050B14;}
+::selection{background:rgba(0,217,198,.3);color:#fff;}
+a{text-decoration:none;color:inherit;}
+@keyframes ctlUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+@keyframes ctlFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-16px);}}
+@keyframes ctlGlow{0%,100%{opacity:.45;}50%{opacity:.85;}}
+@keyframes ctlMarquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@keyframes ctlScroll{0%{transform:translateY(0);opacity:0;}30%{opacity:1;}80%{opacity:1;}100%{transform:translateY(16px);opacity:0;}}
+@keyframes ctlSpin{to{transform:rotate(360deg);}}
+@keyframes ctlBar{from{height:0;}}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" dir="ltr" style="position:relative;min-height:100vh;background:#050B14;color:#D9E2EC;font-family:'Inter',sans-serif;overflow-x:hidden;line-height:1.5;">
 
-<nav class="nav">
-  <div class="wrap nav-in">
-    <a href="#" class="brand" aria-label="cytechlink خانه">
-      <svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><line x1="15" y1="24" x2="33" y2="24" stroke="#0F2C4C" stroke-width="4" stroke-linecap="round"/><circle cx="15" cy="24" r="7.5" fill="#0F2C4C"/><circle cx="33" cy="24" r="7.5" fill="#12A594"/></svg>
-      <span class="lat"><span class="c1">cytech</span><span class="c2">link</span></span>
-    </a>
-    <div class="nav-links" id="navlinks">
-      <a href="#services">خدمات</a>
-      <a href="#product">محصول</a>
-      <a href="#audience">برای چه کسانی</a>
-      <a href="#blog">بلاگ</a>
-      <a href="#contact">تماس</a>
-    </div>
-    <div class="nav-cta">
-      <a href="#contact" class="btn btn-primary">مشاوره‌ی رایگان</a>
-      <button class="burger" id="burger" aria-label="منو"><span></span><span></span><span></span></button>
-    </div>
+  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0;">
+    <div style="position:absolute;top:-180px;left:-120px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,rgba(0,217,198,.18),transparent 60%);filter:blur(40px);animation:ctlGlow 9s ease-in-out infinite;"></div>
+    <div style="position:absolute;top:420px;right:-160px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(0,184,212,.16),transparent 60%);filter:blur(50px);animation:ctlGlow 11s ease-in-out infinite;"></div>
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 80% 50% at 50% 0%,#000 40%,transparent 75%);"></div>
   </div>
-</nav>
 
-<header class="hero">
-  <canvas id="nodes" aria-hidden="true"></canvas>
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow hf">هوش مصنوعی و اتوماسیون برای کسب‌وکار</span>
-      <h1 class="hf hf2">هوش مصنوعی،<span class="l2">دستیارِ <span class="rot" id="rot">مطب</span><span class="caret"></span> تو.</span></h1>
-      <p class="lead hf hf3">cytechlink دستیارهای هوش مصنوعی می‌سازه که ۲۴ ساعته جواب می‌دن، نوبت و رزرو می‌گیرن و مشتری رو نگه می‌دارن — تا تو به کارِ مهم‌ت برسی.</p>
-      <div class="hero-actions hf hf4">
-        <a href="#contact" class="btn btn-primary">مشاوره‌ی رایگان بگیر</a>
-        <a href="#product" class="btn btn-ghost">دیدن محصول</a>
+  <header data-navbar="" style="position:fixed;top:0;left:0;right:0;z-index:100;transition:background .4s ease,backdrop-filter .4s ease,border-color .4s ease,padding .3s ease;border-bottom:1px solid transparent;padding:22px clamp(20px,5vw,72px);">
+    <nav style="max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;">
+      <a href="#top" style="display:flex;align-items:center;gap:11px;">
+        <span style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#00D9C6,#00B8D4);align-items:center;justify-content:center;box-shadow:0 0 22px rgba(0,217,198,.45);">
+          <span style="width:13px;height:13px;border:2.5px solid #050B14;border-radius:4px;transform:rotate(45deg);"></span>
+        </span>
+        <span style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;letter-spacing:-.02em;">CyTech<span style="color:#00D9C6;">Link</span></span>
+      </a>
+      <div data-nav-links="" style="display:flex;align-items:center;gap:30px;">
+        <a href="#" data-goto="home#services" data-navlink="" data-i18n="nav.services" style="font-size:15px;color:#A0AEC0;transition:color .25s;">Services</a>
+        <a href="#" data-goto="work" data-navlink="" data-i18n="nav.work" style="font-size:15px;color:#A0AEC0;transition:color .25s;">Work</a>
+        <a href="#" data-goto="blog" data-navlink="" data-i18n="nav.blog" style="font-size:15px;color:#A0AEC0;transition:color .25s;">Blog</a>
+        <a href="#" data-goto="education" data-navlink="" data-i18n="nav.education" style="font-size:15px;color:#A0AEC0;transition:color .25s;">Education</a>
+        <a href="#" data-goto="order" data-navlink="" data-i18n="nav.order" style="font-size:15px;color:#A0AEC0;transition:color .25s;">Order</a>
       </div>
-      <div class="hero-note hf hf4"><span class="dot"></span> راه‌اندازی سریع · پشتیبانی ماهانه · داده‌ات مال خودته</div>
+      <div style="display:flex;align-items:center;gap:11px;">
+        <button data-theme-toggle="" aria-label="Toggle theme" style="display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:9px;cursor:pointer;transition:all .25s;">
+          <span data-theme-icon="" style="font-size:16px;line-height:1;">☀</span>
+        </button>
+        <button data-lang-toggle="" style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#D9E2EC;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;padding:9px 13px;border-radius:9px;cursor:pointer;transition:all .25s;">
+          <span style="width:6px;height:6px;border-radius:50%;background:#00D9C6;"></span>
+          <span data-lang-label="">فارسی</span>
+        </button>
+        <a href="#" data-goto="order" data-magnetic="" data-i18n="nav.cta" style="display:none;background:linear-gradient(135deg,#00D9C6,#00B8D4);color:#04121A;font-weight:700;font-size:15px;padding:11px 22px;border-radius:10px;box-shadow:0 8px 26px rgba(0,217,198,.32);transition:transform .2s ease,box-shadow .25s;white-space:nowrap;">Get started</a>
+        <button data-burger="" aria-label="Menu" style="display:none;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:9px;width:42px;height:42px;cursor:pointer;flex-direction:column;gap:4px;align-items:center;justify-content:center;">
+          <span style="width:18px;height:2px;background:#D9E2EC;border-radius:2px;"></span>
+          <span style="width:18px;height:2px;background:#D9E2EC;border-radius:2px;"></span>
+          <span style="width:18px;height:2px;background:#D9E2EC;border-radius:2px;"></span>
+        </button>
+      </div>
+    </nav>
+    <div data-mobile-menu="" style="display:none;max-width:1440px;margin:14px auto 0;flex-direction:column;gap:4px;background:rgba(13,19,32,.92);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:12px;">
+      <a href="#" data-goto="home#services" data-i18n="nav.services" style="padding:13px 16px;border-radius:10px;color:#D9E2EC;font-size:16px;">Services</a>
+      <a href="#" data-goto="work" data-i18n="nav.work" style="padding:13px 16px;border-radius:10px;color:#D9E2EC;font-size:16px;">Work</a>
+      <a href="#" data-goto="blog" data-i18n="nav.blog" style="padding:13px 16px;border-radius:10px;color:#D9E2EC;font-size:16px;">Blog</a>
+      <a href="#" data-goto="education" data-i18n="nav.education" style="padding:13px 16px;border-radius:10px;color:#D9E2EC;font-size:16px;">Education</a>
+      <a href="#" data-goto="order" data-i18n="nav.order" style="padding:13px 16px;border-radius:10px;color:#D9E2EC;font-size:16px;">Order</a>
+      <a href="#" data-goto="order" data-i18n="nav.cta" style="margin-top:6px;padding:13px 16px;border-radius:10px;text-align:center;background:linear-gradient(135deg,#00D9C6,#00B8D4);color:#04121A;font-weight:700;font-size:16px;">Get started</a>
     </div>
-    <div class="phone-stage">
-      <div class="phone">
-        <div class="screen">
-          <div class="chat-head">
-            <div class="avatar"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><line x1="15" y1="24" x2="33" y2="24" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="15" cy="24" r="7.5" fill="#fff"/><circle cx="33" cy="24" r="7.5" fill="#12A594"/></svg></div>
-            <div><div class="nm">منشی هوشمند</div><div class="st"><i></i> آنلاین · پاسخ آنی</div></div>
-          </div>
-          <div class="chat-feed" id="feed" aria-live="polite"></div>
-          <div class="sugg" id="sugg">
-            <button data-q="نوبت">نوبت می‌خوام</button>
-            <button data-q="ساعت">ساعت کاری؟</button>
-            <button data-q="قیمت">هزینه ویزیت؟</button>
-          </div>
-          <div class="chat-input">
-            <input id="chatText" type="text" placeholder="پیامت رو بنویس…" aria-label="پیام به منشی هوشمند">
-            <button id="chatSend" aria-label="ارسال"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+  </header>
+
+  <div data-page="home">
+  <section id="top" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:clamp(120px,16vh,180px) clamp(20px,5vw,72px) clamp(60px,8vh,90px);">
+    <div style="display:flex;flex-wrap:wrap;gap:clamp(40px,5vw,72px);align-items:center;">
+      <div style="flex:1 1 460px;min-width:300px;">
+        <div data-hero-anim="" style="display:inline-flex;align-items:center;gap:9px;background:rgba(0,217,198,.08);border:1px solid rgba(0,217,198,.22);border-radius:100px;padding:7px 15px;margin-bottom:26px;opacity:0;animation:ctlUp .7s cubic-bezier(.22,1,.36,1) .1s forwards;">
+          <span style="width:7px;height:7px;border-radius:50%;background:#00D9C6;box-shadow:0 0 10px #00D9C6;"></span>
+          <span data-i18n="hero.badge" style="font-size:13px;font-weight:600;color:#2CF5E4;letter-spacing:.01em;">AI agents, websites &amp; growth — shipped</span>
+        </div>
+        <h1 data-hero-title="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(42px,6vw,84px);line-height:1.04;letter-spacing:-.03em;color:#fff;margin:0 0 24px;">
+          <span data-i18n="hero.title1">Intelligent software,</span><br>
+          <span data-i18n="hero.title2" style="background:linear-gradient(115deg,#00D9C6,#2CF5E4 55%,#00B8D4);-webkit-background-clip:text;background-clip:text;color:transparent;">built by autonomous AI.</span>
+        </h1>
+        <p data-hero-anim="" data-i18n="hero.sub" style="font-size:clamp(17px,1.4vw,20px);color:#A0AEC0;max-width:540px;margin:0 0 36px;opacity:0;animation:ctlUp .7s cubic-bezier(.22,1,.36,1) .35s forwards;">
+          CyTechLink designs, builds and runs your AI agents, websites, social bots and SEO — a single team that turns Python and machine intelligence into measurable growth.
+        </p>
+        <div data-hero-anim="" style="display:flex;flex-wrap:wrap;gap:14px;opacity:0;animation:ctlUp .7s cubic-bezier(.22,1,.36,1) .5s forwards;">
+          <a href="#cta" data-magnetic="" data-i18n="hero.cta1" style="display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,#00D9C6,#00B8D4);color:#04121A;font-weight:700;font-size:16px;padding:15px 28px;border-radius:12px;box-shadow:0 10px 34px rgba(0,217,198,.34);transition:transform .2s ease,box-shadow .25s;">Start a project →</a>
+          <a href="#platform" data-i18n="hero.cta2" style="display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);color:#fff;font-weight:600;font-size:16px;padding:15px 26px;border-radius:12px;transition:all .25s;">See the platform</a>
+        </div>
+        <div data-hero-anim="" style="display:flex;flex-wrap:wrap;gap:26px;margin-top:42px;opacity:0;animation:ctlUp .7s cubic-bezier(.22,1,.36,1) .65s forwards;">
+          <div><div style="font-family:'Sora',sans-serif;font-weight:700;font-size:24px;color:#fff;">120+</div><div data-i18n="hero.stat1" style="font-size:13px;color:#A0AEC0;">AI agents deployed</div></div>
+          <div style="width:1px;background:rgba(255,255,255,.1);"></div>
+          <div><div style="font-family:'Sora',sans-serif;font-weight:700;font-size:24px;color:#fff;">98%</div><div data-i18n="hero.stat2" style="font-size:13px;color:#A0AEC0;">client retention</div></div>
+          <div style="width:1px;background:rgba(255,255,255,.1);"></div>
+          <div><div style="font-family:'Sora',sans-serif;font-weight:700;font-size:24px;color:#fff;">24/7</div><div data-i18n="hero.stat3" style="font-size:13px;color:#A0AEC0;">autonomous ops</div></div>
+        </div>
+      </div>
+      <div data-hero-anim="" style="flex:1 1 440px;min-width:300px;opacity:0;animation:ctlUp .9s cubic-bezier(.22,1,.36,1) .4s forwards;">
+        <div style="position:relative;">
+          <div aria-hidden="true" style="position:absolute;inset:-10% -6%;background:radial-gradient(circle at 70% 30%,rgba(0,217,198,.22),transparent 60%);filter:blur(30px);"></div>
+          <div style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.85),rgba(13,19,32,.9));border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:18px;box-shadow:0 30px 70px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(20px);animation:ctlFloat 7s ease-in-out infinite;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+              <div style="display:flex;align-items:center;gap:9px;">
+                <span style="width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,#00D9C6,#00B8D4);display:inline-flex;align-items:center;justify-content:center;"><span style="width:9px;height:9px;border:2px solid #04121A;border-radius:3px;transform:rotate(45deg);"></span></span>
+                <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:14px;color:#fff;">Agent Console</span>
+              </div>
+              <div style="display:flex;gap:6px;">
+                <span style="width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.16);"></span>
+                <span style="width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.16);"></span>
+                <span style="width:9px;height:9px;border-radius:50%;background:#00D9C6;"></span>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:13px;">
+                <div style="font-size:11px;color:#A0AEC0;margin-bottom:6px;">Tasks automated</div>
+                <div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#fff;">14,820</div>
+                <div style="font-size:11px;color:#00D9C6;margin-top:3px;">▲ 23% this week</div>
+              </div>
+              <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:13px;">
+                <div style="font-size:11px;color:#A0AEC0;margin-bottom:6px;">Conversion lift</div>
+                <div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#fff;">+38%</div>
+                <div style="font-size:11px;color:#00D9C6;margin-top:3px;">▲ SEO + bots</div>
+              </div>
+            </div>
+            <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:15px 15px 11px;margin-bottom:12px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+                <span style="font-size:12px;color:#D9E2EC;font-weight:600;">Agent throughput</span>
+                <span style="font-size:11px;color:#A0AEC0;">last 7d</span>
+              </div>
+              <div style="display:flex;align-items:flex-end;gap:8px;height:78px;">
+                <div style="flex:1;height:38%;background:linear-gradient(180deg,rgba(0,217,198,.5),rgba(0,217,198,.12));border-radius:5px 5px 0 0;animation:ctlBar 1s ease .3s both;"></div>
+                <div style="flex:1;height:55%;background:linear-gradient(180deg,rgba(0,217,198,.5),rgba(0,217,198,.12));border-radius:5px 5px 0 0;animation:ctlBar 1s ease .4s both;"></div>
+                <div style="flex:1;height:46%;background:linear-gradient(180deg,rgba(0,217,198,.5),rgba(0,217,198,.12));border-radius:5px 5px 0 0;animation:ctlBar 1s ease .5s both;"></div>
+                <div style="flex:1;height:70%;background:linear-gradient(180deg,rgba(0,217,198,.5),rgba(0,217,198,.12));border-radius:5px 5px 0 0;animation:ctlBar 1s ease .6s both;"></div>
+                <div style="flex:1;height:62%;background:linear-gradient(180deg,rgba(0,217,198,.5),rgba(0,217,198,.12));border-radius:5px 5px 0 0;animation:ctlBar 1s ease .7s both;"></div>
+                <div style="flex:1;height:88%;background:linear-gradient(180deg,#00D9C6,rgba(0,217,198,.25));border-radius:5px 5px 0 0;box-shadow:0 0 16px rgba(0,217,198,.5);animation:ctlBar 1s ease .8s both;"></div>
+                <div style="flex:1;height:74%;background:linear-gradient(180deg,rgba(0,217,198,.5),rgba(0,217,198,.12));border-radius:5px 5px 0 0;animation:ctlBar 1s ease .9s both;"></div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:11px;background:rgba(0,217,198,.06);border:1px solid rgba(0,217,198,.18);border-radius:13px;padding:12px 14px;">
+              <span style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#00D9C6,#00B8D4);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="width:11px;height:11px;border-radius:50%;border:2px solid #04121A;"></span></span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:12px;color:#fff;font-weight:600;">Deploy agent · build-bot-v4</div>
+                <div style="font-size:11px;color:#A0AEC0;">Python · running autonomously</div>
+              </div>
+              <span style="font-size:11px;font-weight:600;color:#00D9C6;background:rgba(0,217,198,.12);padding:5px 10px;border-radius:7px;white-space:nowrap;">● live</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</header>
+    <div style="display:flex;justify-content:center;margin-top:clamp(40px,6vh,72px);">
+      <div style="width:26px;height:42px;border:2px solid rgba(255,255,255,.18);border-radius:14px;display:flex;justify-content:center;padding-top:8px;">
+        <span style="width:4px;height:8px;border-radius:3px;background:#00D9C6;animation:ctlScroll 1.8s ease-in-out infinite;"></span>
+      </div>
+    </div>
+  </section>
 
-<div class="trust">
-  <div class="wrap trust-in">
-    <span class="lbl">ساخته‌شده برای:</span>
-    <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v4M16 2v4M3 10h18M5 6h14a2 2 0 012 2v11a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2z"/></svg> مطب‌ها و کلینیک‌ها</span>
-    <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l8-4v18M19 21V11l-6-3M9 9v.01M9 12v.01M9 15v.01"/></svg> بوتیک‌هتل‌ها</span>
-    <span class="item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h16M6 8v9a2 2 0 002 2h8a2 2 0 002-2V8M9 4h6M12 8v11"/></svg> کافه‌ها و کسب‌وکارها</span>
+  <section data-reveal="" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:8px clamp(20px,5vw,72px) clamp(50px,7vh,80px);">
+    <p data-i18n="logos.label" style="text-align:center;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#A0AEC0;margin:0 0 28px;">Trusted by teams building the future</p>
+    <div style="position:relative;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);">
+      <div data-marquee="" style="display:flex;gap:64px;width:max-content;align-items:center;animation:ctlMarquee 32s linear infinite;">
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;letter-spacing:-.02em;transition:opacity .3s;">Northwind</span>
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;letter-spacing:.06em;transition:opacity .3s;">VOLTA</span>
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;font-style:italic;transition:opacity .3s;">quanta</span>
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;letter-spacing:-.03em;transition:opacity .3s;">Meridian.</span>
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;transition:opacity .3s;">Ardent Labs</span>
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;letter-spacing:.04em;transition:opacity .3s;">HELIXR</span>
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;letter-spacing:-.02em;transition:opacity .3s;">Northwind</span>
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;letter-spacing:.06em;transition:opacity .3s;">VOLTA</span>
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;font-style:italic;transition:opacity .3s;">quanta</span>
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;letter-spacing:-.03em;transition:opacity .3s;">Meridian.</span>
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;transition:opacity .3s;">Ardent Labs</span>
+        <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:22px;color:#fff;opacity:.5;white-space:nowrap;letter-spacing:.04em;transition:opacity .3s;">HELIXR</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" data-reveal="" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:clamp(50px,8vh,90px) clamp(20px,5vw,72px) 0;">
+    <div style="text-align:center;max-width:680px;margin:0 auto clamp(40px,5vh,60px);">
+      <span data-i18n="services.kicker" style="display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#00D9C6;font-weight:600;margin-bottom:14px;">What we do</span>
+      <h2 data-i18n="services.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(32px,4vw,48px);line-height:1.1;letter-spacing:-.02em;color:#fff;margin:0 0 16px;">One team, the full AI stack</h2>
+      <p data-i18n="services.sub" style="font-size:clamp(16px,1.3vw,19px);color:#A0AEC0;margin:0;">From autonomous agents to the sites and campaigns that put them to work — we design, build and operate it end to end.</p>
+    </div>
+  </section>
+  <section id="platform" data-reveal="" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:clamp(40px,6vh,70px) clamp(20px,5vw,72px) clamp(50px,7vh,90px);">
+    <div data-tabs="" style="background:linear-gradient(160deg,rgba(23,35,56,.5),rgba(13,19,32,.6));border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:clamp(18px,3vw,30px);backdrop-filter:blur(16px);">
+      <div data-tablist="" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:clamp(20px,3vw,30px);">
+        <button data-tab="0" style="display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(0,217,198,.3);background:rgba(0,217,198,.1);color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:11px 18px;border-radius:11px;cursor:pointer;transition:all .25s;"><span style="width:7px;height:7px;border-radius:50%;background:#00D9C6;"></span><span data-i18n="tab.0">AI Agents</span></button>
+        <button data-tab="1" style="display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:11px 18px;border-radius:11px;cursor:pointer;transition:all .25s;"><span style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);"></span><span data-i18n="tab.1">Websites &amp; Apps</span></button>
+        <button data-tab="2" style="display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:11px 18px;border-radius:11px;cursor:pointer;transition:all .25s;"><span style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);"></span><span data-i18n="tab.2">Social Bots</span></button>
+        <button data-tab="3" style="display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:11px 18px;border-radius:11px;cursor:pointer;transition:all .25s;"><span style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);"></span><span data-i18n="tab.3">SEO &amp; Growth</span></button>
+      </div>
+      <div data-tabpanels="">
+        <div data-panel="0" style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,56px);align-items:center;">
+          <div style="flex:1 1 360px;min-width:280px;">
+            <h3 data-i18n="p0.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(26px,3vw,36px);line-height:1.15;letter-spacing:-.02em;color:#fff;margin:0 0 16px;">Autonomous agents that do the work</h3>
+            <p data-i18n="p0.body" style="font-size:17px;color:#A0AEC0;margin:0 0 22px;">We build Python-powered AI agents that handle support, research, scheduling and operations on their own — connected to your tools, monitored, and continuously improving.</p>
+            <div style="display:flex;flex-direction:column;gap:13px;">
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p0.f1" style="font-size:15px;color:#D9E2EC;">Multi-step reasoning &amp; tool use</span></div>
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p0.f2" style="font-size:15px;color:#D9E2EC;">Connected to your CRM, docs &amp; APIs</span></div>
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p0.f3" style="font-size:15px;color:#D9E2EC;">Human-in-the-loop guardrails</span></div>
+            </div>
+          </div>
+          <div style="flex:1 1 360px;min-width:280px;">
+            <div style="position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.22,1,.36,1);">
+              <img src="img/Aisample.jpg" alt="aisample" style="width:100%;height:100%;object-fit:cover;display:block;">
+            </div>
+          </div>
+        </div>
+        <div data-panel="1" style="display:none;flex-wrap:wrap;gap:clamp(28px,4vw,56px);align-items:center;">
+          <div style="flex:1 1 360px;min-width:280px;order:2;">
+            <div data-imgzoom="" style="position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.22,1,.36,1);">
+              <img src="img/webui.jpg" alt="aisample" style="width:100%;height:100%;object-fit:cover;display:block;">
+            </div>
+          </div>
+          <div style="flex:1 1 360px;min-width:280px;order:1;">
+            <h3 data-i18n="p1.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(26px,3vw,36px);line-height:1.15;letter-spacing:-.02em;color:#fff;margin:0 0 16px;">Websites &amp; apps that convert</h3>
+            <p data-i18n="p1.body" style="font-size:17px;color:#A0AEC0;margin:0 0 22px;">Fast, beautiful, conversion-focused sites and web apps — designed, engineered and shipped with AI accelerating every step from copy to deployment.</p>
+            <div style="display:flex;flex-direction:column;gap:13px;">
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p1.f1" style="font-size:15px;color:#D9E2EC;">Sub-second load, perfect Lighthouse</span></div>
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p1.f2" style="font-size:15px;color:#D9E2EC;">Headless CMS &amp; full ownership</span></div>
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p1.f3" style="font-size:15px;color:#D9E2EC;">A/B tested for conversion</span></div>
+            </div>
+          </div>
+        </div>
+        <div data-panel="2" style="display:none;flex-wrap:wrap;gap:clamp(28px,4vw,56px);align-items:center;">
+          <div style="flex:1 1 360px;min-width:280px;">
+            <h3 data-i18n="p2.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(26px,3vw,36px);line-height:1.15;letter-spacing:-.02em;color:#fff;margin:0 0 16px;">Social bots that never sleep</h3>
+            <p data-i18n="p2.body" style="font-size:17px;color:#A0AEC0;margin:0 0 22px;">Always-on bots that publish, reply, qualify leads and grow your audience across every platform — on brand, on schedule, fully automated.</p>
+            <div style="display:flex;flex-direction:column;gap:13px;">
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p2.f1" style="font-size:15px;color:#D9E2EC;">Auto-publish &amp; smart replies</span></div>
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p2.f2" style="font-size:15px;color:#D9E2EC;">Lead qualification in DMs</span></div>
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p2.f3" style="font-size:15px;color:#D9E2EC;">Analytics &amp; growth reporting</span></div>
+            </div>
+          </div>
+          <div style="flex:1 1 360px;min-width:280px;">
+            <div data-imgzoom="" style="position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.22,1,.36,1);">
+              <img src="img/social.jpg" alt="aisample" style="width:100%;height:100%;object-fit:cover;display:block;">
+            </div>
+          </div>
+        </div>
+        <div data-panel="3" style="display:none;flex-wrap:wrap;gap:clamp(28px,4vw,56px);align-items:center;">
+          <div style="flex:1 1 360px;min-width:280px;order:2;">
+            <div data-imgzoom="" style="position:relative;aspect-ratio:4/3;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.22,1,.36,1);">
+              <img src="img/seo.jpg" alt="aisample" style="width:100%;height:100%;object-fit:cover;display:block;">
+            </div>
+          </div>
+          <div style="flex:1 1 360px;min-width:280px;order:1;">
+            <h3 data-i18n="p3.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(26px,3vw,36px);line-height:1.15;letter-spacing:-.02em;color:#fff;margin:0 0 16px;">SEO &amp; growth, compounding</h3>
+            <p data-i18n="p3.body" style="font-size:17px;color:#A0AEC0;margin:0 0 22px;">Technical SEO, AI content engines and paid campaigns that compound month over month — measured against revenue, not vanity metrics.</p>
+            <div style="display:flex;flex-direction:column;gap:13px;">
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p3.f1" style="font-size:15px;color:#D9E2EC;">AI content at scale, human-edited</span></div>
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p3.f2" style="font-size:15px;color:#D9E2EC;">Technical audits &amp; fixes</span></div>
+              <div style="display:flex;gap:11px;align-items:flex-start;"><span style="width:20px;height:20px;border-radius:6px;background:rgba(0,217,198,.14);border:1px solid rgba(0,217,198,.3);flex-shrink:0;margin-top:1px;display:inline-flex;align-items:center;justify-content:center;color:#00D9C6;font-size:12px;">✓</span><span data-i18n="p3.f3" style="font-size:15px;color:#D9E2EC;">Revenue-attributed reporting</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="work" data-reveal="" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:clamp(50px,8vh,90px) clamp(20px,5vw,72px);">
+    <div style="text-align:center;max-width:680px;margin:0 auto clamp(40px,5vh,56px);">
+      <span data-i18n="feat.kicker" style="display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#00D9C6;font-weight:600;margin-bottom:14px;">Why CyTechLink</span>
+      <h2 data-i18n="feat.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(32px,4vw,48px);line-height:1.1;letter-spacing:-.02em;color:#fff;margin:0;">Built for teams that move fast</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;">
+      <div data-reveal="" data-feature="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:26px;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4),0 0 40px rgba(0,217,198,.12);">
+        <div style="width:46px;height:46px;border-radius:13px;background:rgba(0,217,198,.1);border:1px solid rgba(0,217,198,.25);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><span style="width:16px;height:16px;border:2.5px solid #00D9C6;border-radius:5px;transform:rotate(45deg);"></span></div>
+        <h3 data-i18n="feat.1t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:19px;color:#fff;margin:0 0 9px;">Ship in weeks, not quarters</h3>
+        <p data-i18n="feat.1b" style="font-size:15px;color:#A0AEC0;margin:0;line-height:1.6;">AI-accelerated delivery means working software in your hands fast — and iterating just as quickly.</p>
+      </div>
+      <div data-reveal="" data-reveal-delay="80" data-feature="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:26px;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4),0 0 40px rgba(0,217,198,.12);">
+        <div style="width:46px;height:46px;border-radius:13px;background:rgba(0,217,198,.1);border:1px solid rgba(0,217,198,.25);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><span style="width:16px;height:16px;border:2.5px solid #00D9C6;border-radius:50%;"></span></div>
+        <h3 data-i18n="feat.2t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:19px;color:#fff;margin:0 0 9px;">Owned by you, end to end</h3>
+        <p data-i18n="feat.2b" style="font-size:15px;color:#A0AEC0;margin:0;line-height:1.6;">No black boxes. You get the code, the models, the playbooks — full ownership and full transparency.</p>
+      </div>
+      <div data-reveal="" data-reveal-delay="160" data-feature="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:26px;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4),0 0 40px rgba(0,217,198,.12);">
+        <div style="width:46px;height:46px;border-radius:13px;background:rgba(0,217,198,.1);border:1px solid rgba(0,217,198,.25);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><span style="width:18px;height:3px;background:#00D9C6;border-radius:2px;box-shadow:0 6px 0 #00D9C6,0 -6px 0 #00D9C6;"></span></div>
+        <h3 data-i18n="feat.3t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:19px;color:#fff;margin:0 0 9px;">Python at the core</h3>
+        <p data-i18n="feat.3b" style="font-size:15px;color:#A0AEC0;margin:0;line-height:1.6;">A battle-tested Python stack powers every agent and pipeline — extensible, observable and production-grade.</p>
+      </div>
+      <div data-reveal="" data-feature="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:26px;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4),0 0 40px rgba(0,217,198,.12);">
+        <div style="width:46px;height:46px;border-radius:13px;background:rgba(0,217,198,.1);border:1px solid rgba(0,217,198,.25);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><span style="width:16px;height:16px;border:2.5px solid #00D9C6;border-radius:3px;"></span></div>
+        <h3 data-i18n="feat.4t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:19px;color:#fff;margin:0 0 9px;">Always-on monitoring</h3>
+        <p data-i18n="feat.4b" style="font-size:15px;color:#A0AEC0;margin:0;line-height:1.6;">Every agent is observed 24/7 with alerting, evals and guardrails so quality never drifts.</p>
+      </div>
+      <div data-reveal="" data-reveal-delay="80" data-feature="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:26px;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4),0 0 40px rgba(0,217,198,.12);">
+        <div style="width:46px;height:46px;border-radius:13px;background:rgba(0,217,198,.1);border:1px solid rgba(0,217,198,.25);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><span style="width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid #00D9C6;"></span></div>
+        <h3 data-i18n="feat.5t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:19px;color:#fff;margin:0 0 9px;">Tied to revenue</h3>
+        <p data-i18n="feat.5b" style="font-size:15px;color:#A0AEC0;margin:0;line-height:1.6;">We measure against the numbers that matter — pipeline, conversion and retention, not vanity metrics.</p>
+      </div>
+      <div data-reveal="" data-reveal-delay="160" data-feature="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:26px;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4),0 0 40px rgba(0,217,198,.12);">
+        <div style="width:46px;height:46px;border-radius:13px;background:rgba(0,217,198,.1);border:1px solid rgba(0,217,198,.25);display:flex;align-items:center;justify-content:center;margin-bottom:18px;"><span style="width:15px;height:15px;border:2.5px solid #00D9C6;border-top-color:transparent;border-radius:50%;animation:ctlSpin 3s linear infinite;"></span></div>
+        <h3 data-i18n="feat.6t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:19px;color:#fff;margin:0 0 9px;">A partner, not a vendor</h3>
+        <p data-i18n="feat.6b" style="font-size:15px;color:#A0AEC0;margin:0;line-height:1.6;">One senior team across strategy, design and engineering — embedded with you for the long run.</p>
+      </div>
+    </div>
+  </section>
+  <section id="metrics" data-reveal="" style="position:relative;z-index:1;padding:clamp(50px,8vh,90px) clamp(20px,5vw,72px);">
+    <div style="max-width:1440px;margin:0 auto;position:relative;background:linear-gradient(135deg,rgba(0,217,198,.07),rgba(0,184,212,.04));border:1px solid rgba(0,217,198,.16);border-radius:26px;padding:clamp(36px,5vw,64px);overflow:hidden;">
+      <div aria-hidden="true" style="position:absolute;top:-40%;right:-10%;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(0,217,198,.16),transparent 60%);filter:blur(40px);"></div>
+      <div style="position:relative;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(28px,4vw,48px);text-align:center;">
+        <div>
+          <div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(40px,5vw,62px);line-height:1;color:#fff;letter-spacing:-.03em;"><span data-count="120" data-suffix="+">0</span></div>
+          <div data-i18n="m.1" style="font-size:15px;color:#A0AEC0;margin-top:10px;">AI agents in production</div>
+        </div>
+        <div>
+          <div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(40px,5vw,62px);line-height:1;color:#fff;letter-spacing:-.03em;"><span data-count="38" data-prefix="+" data-suffix="%">0</span></div>
+          <div data-i18n="m.2" style="font-size:15px;color:#A0AEC0;margin-top:10px;">average conversion lift</div>
+        </div>
+        <div>
+          <div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(40px,5vw,62px);line-height:1;color:#fff;letter-spacing:-.03em;"><span data-count="2.4" data-suffix="M">0</span></div>
+          <div data-i18n="m.3" style="font-size:15px;color:#A0AEC0;margin-top:10px;">tasks automated / month</div>
+        </div>
+        <div>
+          <div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(40px,5vw,62px);line-height:1;color:#fff;letter-spacing:-.03em;"><span data-count="98" data-suffix="%">0</span></div>
+          <div data-i18n="m.4" style="font-size:15px;color:#A0AEC0;margin-top:10px;">client retention rate</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section data-reveal="" style="position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:clamp(40px,6vh,70px) clamp(20px,5vw,72px);">
+    <div style="text-align:center;margin-bottom:clamp(32px,4vh,48px);">
+      <span data-i18n="t.kicker" style="display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#00D9C6;font-weight:600;margin-bottom:14px;">Client stories</span>
+      <h2 data-i18n="t.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(30px,4vw,46px);line-height:1.1;letter-spacing:-.02em;color:#fff;margin:0;">Loved by the teams we build with</h2>
+    </div>
+    <div data-carousel="" style="position:relative;overflow:hidden;border-radius:22px;">
+      <div data-carousel-track="" style="display:flex;transition:transform .7s cubic-bezier(.22,1,.36,1);">
+        <div data-slide="" style="flex:0 0 100%;padding:6px;">
+          <div style="background:linear-gradient(160deg,rgba(23,35,56,.6),rgba(13,19,32,.6));border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:clamp(28px,4vw,48px);backdrop-filter:blur(14px);">
+            <div data-font-head="" style="font-family:'Sora',sans-serif;font-size:40px;color:#00D9C6;line-height:.6;margin-bottom:14px;">"</div>
+            <p data-i18n="t.1q" style="font-size:clamp(18px,2vw,24px);line-height:1.5;color:#fff;font-weight:500;margin:0 0 26px;">CyTechLink stood up an AI support agent that now resolves two-thirds of our tickets autonomously. It paid for itself in the first month.</p>
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#00D9C6,#00B8D4);flex-shrink:0;"></div>
+              <div><div data-i18n="t.1n" style="font-weight:600;color:#fff;font-size:16px;">Sara Mohammadi</div><div data-i18n="t.1r" style="font-size:14px;color:#A0AEC0;">VP Operations, Northwind</div></div>
+            </div>
+          </div>
+        </div>
+        <div data-slide="" style="flex:0 0 100%;padding:6px;">
+          
+        <div style="background:linear-gradient(160deg,rgba(23,35,56,.6),rgba(13,19,32,.6));border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:clamp(28px,4vw,48px);backdrop-filter:blur(14px);">
+            <div data-font-head="" style="font-family:'Sora',sans-serif;font-size:40px;color:#00D9C6;line-height:.6;margin-bottom:14px;">"</div>
+            <p data-i18n="t.2q" style="font-size:clamp(18px,2vw,24px);line-height:1.5;color:#fff;font-weight:500;margin:0 0 26px;">They rebuilt our site and plugged in social bots — organic traffic is up 3x and our DMs basically qualify themselves now.</p>
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#2CF5E4,#00D9C6);flex-shrink:0;"></div>
+              <div><div data-i18n="t.2n" style="font-weight:600;color:#fff;font-size:16px;">James Okafor</div><div data-i18n="t.2r" style="font-size:14px;color:#A0AEC0;">Founder, Volta</div></div>
+            </div>
+          </div></div>
+        <div data-slide="" style="flex:0 0 100%;padding:6px;">
+          <div style="background:linear-gradient(160deg,rgba(23,35,56,.6),rgba(13,19,32,.6));border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:clamp(28px,4vw,48px);backdrop-filter:blur(14px);">
+            <div data-font-head="" style="font-family:'Sora',sans-serif;font-size:40px;color:#00D9C6;line-height:.6;margin-bottom:14px;">"</div>
+            <p data-i18n="t.3q" style="font-size:clamp(18px,2vw,24px);line-height:1.5;color:#fff;font-weight:500;margin:0 0 26px;">The most senior team we've worked with. Python-deep, design-sharp, and genuinely invested in our growth numbers.</p>
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#00B8D4,#2CF5E4);flex-shrink:0;"></div>
+              <div><div data-i18n="t.3n" style="font-weight:600;color:#fff;font-size:16px;">Lena Brandt</div><div data-i18n="t.3r" style="font-size:14px;color:#A0AEC0;">CTO, Meridian</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:9px;margin-top:24px;">
+      <button data-dot="0" aria-label="Slide 1" style="width:30px;height:7px;border-radius:5px;border:none;background:#00D9C6;cursor:pointer;transition:all .3s;padding:0;"></button>
+      <button data-dot="1" aria-label="Slide 2" style="width:9px;height:7px;border-radius:5px;border:none;background:rgba(255,255,255,.2);cursor:pointer;transition:all .3s;padding:0;"></button>
+      <button data-dot="2" aria-label="Slide 3" style="width:9px;height:7px;border-radius:5px;border:none;background:rgba(255,255,255,.2);cursor:pointer;transition:all .3s;padding:0;"></button>
+    </div>
+  </section>
+  <section id="faq" data-reveal="" style="position:relative;z-index:1;max-width:820px;margin:0 auto;padding:clamp(50px,8vh,90px) clamp(20px,5vw,72px);">
+    <div style="text-align:center;margin-bottom:clamp(32px,4vh,48px);">
+      <span data-i18n="faq.kicker" style="display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#00D9C6;font-weight:600;margin-bottom:14px;">FAQ</span>
+      <h2 data-i18n="faq.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(30px,4vw,46px);line-height:1.1;letter-spacing:-.02em;color:#fff;margin:0;">Questions, answered</h2>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div data-acc="" style="background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;transition:border-color .3s;">
+        <button data-acc-btn="" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:none;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:clamp(16px,1.6vw,18px);text-align:start;padding:20px 22px;cursor:pointer;">
+          <span data-i18n="faq.1q">How fast can you ship a first version?</span>
+          <span data-acc-icon="" style="flex-shrink:0;width:22px;height:22px;position:relative;transition:transform .3s;"><span style="position:absolute;top:10px;left:4px;width:14px;height:2px;background:#00D9C6;border-radius:2px;"></span><span style="position:absolute;top:4px;left:10px;width:2px;height:14px;background:#00D9C6;border-radius:2px;"></span></span>
+        </button>
+        <div data-acc-body="" style="max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.22,1,.36,1);"><p data-i18n="faq.1a" style="margin:0;padding:0 22px 20px;font-size:15px;color:#A0AEC0;line-height:1.65;">Most engagements have a working first version in 2–4 weeks. Agents and bots can be live even sooner depending on scope and integrations.</p></div>
+      </div>
+      <div data-acc="" style="background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;transition:border-color .3s;">
+        <button data-acc-btn="" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:none;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:clamp(16px,1.6vw,18px);text-align:start;padding:20px 22px;cursor:pointer;">
+          <span data-i18n="faq.2q">Do we own the code and the agents?</span>
+          <span data-acc-icon="" style="flex-shrink:0;width:22px;height:22px;position:relative;transition:transform .3s;"><span style="position:absolute;top:10px;left:4px;width:14px;height:2px;background:#00D9C6;border-radius:2px;"></span><span style="position:absolute;top:4px;left:10px;width:2px;height:14px;background:#00D9C6;border-radius:2px;"></span></span>
+        </button>
+        <div data-acc-body="" style="max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.22,1,.36,1);"><p data-i18n="faq.2a" style="margin:0;padding:0 22px 20px;font-size:15px;color:#A0AEC0;line-height:1.65;">Yes — fully. You keep the source code, model configs and operating playbooks. No lock-in, no black boxes.</p></div>
+      </div>
+      <div data-acc="" style="background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;transition:border-color .3s;">
+        <button data-acc-btn="" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:none;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:clamp(16px,1.6vw,18px);text-align:start;padding:20px 22px;cursor:pointer;">
+          <span data-i18n="faq.3q">Which platforms do the social bots support?</span>
+          <span data-acc-icon="" style="flex-shrink:0;width:22px;height:22px;position:relative;transition:transform .3s;"><span style="position:absolute;top:10px;left:4px;width:14px;height:2px;background:#00D9C6;border-radius:2px;"></span><span style="position:absolute;top:4px;left:10px;width:2px;height:14px;background:#00D9C6;border-radius:2px;"></span></span>
+        </button>
+        <div data-acc-body="" style="max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.22,1,.36,1);"><p data-i18n="faq.3a" style="margin:0;padding:0 22px 20px;font-size:15px;color:#A0AEC0;line-height:1.65;">Instagram, X, LinkedIn, Telegram, WhatsApp and more. We build on official APIs wherever available and respect each platform's rules.</p></div>
+      </div>
+      <div data-acc="" style="background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden;transition:border-color .3s;">
+        <button data-acc-btn="" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:none;color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:clamp(16px,1.6vw,18px);text-align:start;padding:20px 22px;cursor:pointer;">
+          <span data-i18n="faq.4q">How do you price engagements?</span>
+          <span data-acc-icon="" style="flex-shrink:0;width:22px;height:22px;position:relative;transition:transform .3s;"><span style="position:absolute;top:10px;left:4px;width:14px;height:2px;background:#00D9C6;border-radius:2px;"></span><span style="position:absolute;top:4px;left:10px;width:2px;height:14px;background:#00D9C6;border-radius:2px;"></span></span>
+        </button>
+        <div data-acc-body="" style="max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.22,1,.36,1);"><p data-i18n="faq.4a" style="margin:0;padding:0 22px 20px;font-size:15px;color:#A0AEC0;line-height:1.65;">Fixed-scope projects for one-off builds, or a monthly retainer for ongoing agents, growth and operations. We'll recommend the right fit on a quick call.</p></div>
+      </div>
+    </div>
+  </section>
+  <section id="cta" data-reveal="" style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:clamp(40px,6vh,70px) clamp(20px,5vw,72px) clamp(60px,8vh,100px);">
+    <div style="position:relative;overflow:hidden;border-radius:28px;border:1px solid rgba(0,217,198,.22);background:linear-gradient(135deg,rgba(0,217,198,.12),rgba(8,17,31,.7) 55%);padding:clamp(40px,6vw,80px) clamp(28px,5vw,72px);text-align:center;">
+      <div aria-hidden="true" style="position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:700px;height:500px;background:radial-gradient(circle,rgba(0,217,198,.2),transparent 60%);filter:blur(50px);"></div>
+      <div style="position:relative;">
+        <h2 data-i18n="cta.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(32px,4.5vw,58px);line-height:1.08;letter-spacing:-.03em;color:#fff;margin:0 auto 18px;max-width:760px;">Let's build something intelligent</h2>
+        <p data-i18n="cta.sub" style="font-size:clamp(17px,1.5vw,20px);color:#D9E2EC;max-width:560px;margin:0 auto 34px;">Tell us what you're working on. We'll come back within a day with a plan and a fixed quote.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
+          <a href="#top" data-magnetic="" data-i18n="cta.b1" style="display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,#00D9C6,#00B8D4);color:#04121A;font-weight:700;font-size:17px;padding:16px 32px;border-radius:13px;box-shadow:0 12px 38px rgba(0,217,198,.4);transition:transform .2s,box-shadow .25s;">Start a project →</a>
+          <a href="#faq" data-i18n="cta.b2" style="display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);color:#fff;font-weight:600;font-size:17px;padding:16px 30px;border-radius:13px;transition:all .25s;">Book a call</a>
+        </div>
+      </div>
+    </div>
+  </section>
   </div>
+
+  <div data-page="blog" style="display:none;">
+    <section style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:clamp(120px,15vh,168px) clamp(20px,5vw,72px) clamp(28px,4vh,44px);">
+      <span data-i18n="blog.kicker" style="display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#00D9C6;font-weight:600;margin-bottom:14px;">Blog &amp; News</span>
+      <h1 data-i18n="blog.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(36px,5vw,64px);line-height:1.05;letter-spacing:-.03em;color:#fff;margin:0 0 16px;max-width:760px;">Signals from the frontier of applied AI</h1>
+      <p data-i18n="blog.sub" style="font-size:clamp(16px,1.4vw,20px);color:#A0AEC0;margin:0;max-width:560px;">Field notes, launches and playbooks from the team building autonomous agents, sites and growth engines.</p>
+    </section>
+    <section style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(60px,8vh,100px);">
+      <div data-reveal="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin-bottom:18px;">
+        <a href="#" data-goto="blog" data-card="" style="grid-column:1/-1;display:flex;flex-wrap:wrap;gap:clamp(20px,3vw,40px);background:linear-gradient(160deg,rgba(23,35,56,.6),rgba(13,19,32,.6));border:1px solid rgba(255,255,255,.08);border-radius:20px;overflow:hidden;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-6px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div style="flex:1 1 340px;min-width:260px;min-height:240px;background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Sora',sans-serif;font-size:13px;color:#5b6b82;">[ feature image ]</span></div>
+          <div style="flex:2 1 360px;min-width:280px;padding:clamp(24px,3vw,40px);display:flex;flex-direction:column;justify-content:center;">
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:14px;"><span style="font-size:12px;font-weight:600;color:#00D9C6;background:rgba(0,217,198,.1);border:1px solid rgba(0,217,198,.22);padding:5px 11px;border-radius:100px;">Featured</span><span data-i18n="blog.date1" style="font-size:13px;color:#A0AEC0;">Jun 12, 2026</span></div>
+            <h2 data-i18n="blog.h1" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(22px,2.4vw,32px);line-height:1.2;color:#fff;margin:0 0 12px;">How we shipped 40 production agents without a single midnight page</h2>
+            <p data-i18n="blog.x1" style="font-size:16px;color:#A0AEC0;margin:0 0 18px;line-height:1.6;">The evals, guardrails and Python tooling that let autonomous agents run unattended — and how we sleep at night.</p>
+            <span data-i18n="blog.read" style="font-size:14px;font-weight:600;color:#00D9C6;">Read article →</span>
+          </div>
+        </a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;">
+        <a href="#" data-goto="blog" data-reveal="" data-card="" style="display:flex;flex-direction:column;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div style="height:170px;background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Sora',sans-serif;font-size:12px;color:#5b6b82;">[ image ]</span></div>
+          <div style="padding:22px;">
+            <div style="display:flex;gap:10px;margin-bottom:12px;"><span data-i18n="blog.tag.eng" style="font-size:12px;font-weight:600;color:#A0AEC0;">Engineering</span><span style="font-size:12px;color:#5b6b82;">·</span><span data-i18n="blog.date2" style="font-size:12px;color:#5b6b82;">Jun 4</span></div>
+            <h3 data-i18n="blog.h2" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:19px;line-height:1.25;color:#fff;margin:0 0 9px;">A Python pattern for resilient agent tool-calls</h3>
+            <p data-i18n="blog.x2" style="font-size:14px;color:#A0AEC0;margin:0;line-height:1.6;">Retries, timeouts and idempotency keys that keep agents reliable under real-world failure.</p>
+          </div>
+        </a>
+        <a href="#" data-goto="blog" data-reveal="" data-reveal-delay="80" data-card="" style="display:flex;flex-direction:column;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div style="height:170px;background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Sora',sans-serif;font-size:12px;color:#5b6b82;">[ image ]</span></div>
+          <div style="padding:22px;">
+            <div style="display:flex;gap:10px;margin-bottom:12px;"><span data-i18n="blog.tag.growth" style="font-size:12px;font-weight:600;color:#A0AEC0;">Growth</span><span style="font-size:12px;color:#5b6b82;">·</span><span data-i18n="blog.date3" style="font-size:12px;color:#5b6b82;">May 28</span></div>
+            <h3 data-i18n="blog.h3" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:19px;line-height:1.25;color:#fff;margin:0 0 9px;">SEO in the age of AI answers</h3>
+            <p data-i18n="blog.x3" style="font-size:14px;color:#A0AEC0;margin:0;line-height:1.6;">What changed for organic traffic, and the content engine we run to stay ahead.</p>
+          </div>
+        </a>
+        <a href="#" data-goto="blog" data-reveal="" data-reveal-delay="160" data-card="" style="display:flex;flex-direction:column;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div style="height:170px;background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;"><span style="font-family:'Sora',sans-serif;font-size:12px;color:#5b6b82;">[ image ]</span></div>
+          <div style="padding:22px;">
+            <div style="display:flex;gap:10px;margin-bottom:12px;"><span data-i18n="blog.tag.product" style="font-size:12px;font-weight:600;color:#A0AEC0;">Product</span><span style="font-size:12px;color:#5b6b82;">·</span><span data-i18n="blog.date4" style="font-size:12px;color:#5b6b82;">May 19</span></div>
+            <h3 data-i18n="blog.h4" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:19px;line-height:1.25;color:#fff;margin:0 0 9px;">Designing social bots people actually trust</h3>
+            <p data-i18n="blog.x4" style="font-size:14px;color:#A0AEC0;margin:0;line-height:1.6;">Tone, transparency and the handoff rules that keep automation feeling human.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+  </div>
+  <div data-page="education" style="display:none;">
+    <section style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:clamp(120px,15vh,168px) clamp(20px,5vw,72px) clamp(28px,4vh,44px);">
+      <span data-i18n="edu.kicker" style="display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#00D9C6;font-weight:600;margin-bottom:14px;">Education</span>
+      <h1 data-i18n="edu.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(36px,5vw,64px);line-height:1.05;letter-spacing:-.03em;color:#fff;margin:0 0 16px;max-width:780px;">Learn to build with AI, the practical way</h1>
+      <p data-i18n="edu.sub" style="font-size:clamp(16px,1.4vw,20px);color:#A0AEC0;margin:0;max-width:580px;">Hands-on courses and live cohorts from the engineers who ship agents in production — Python, automation, growth.</p>
+    </section>
+    <section style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(28px,4vh,40px);">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;">
+        <div data-reveal="" data-card="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:28px;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;"><div style="width:46px;height:46px;border-radius:13px;background:rgba(0,217,198,.1);border:1px solid rgba(0,217,198,.25);display:flex;align-items:center;justify-content:center;"><span style="width:16px;height:16px;border:2.5px solid #00D9C6;border-radius:5px;transform:rotate(45deg);"></span></div><span data-i18n="edu.lvl1" style="font-size:12px;font-weight:600;color:#A0AEC0;border:1px solid rgba(255,255,255,.12);padding:5px 11px;border-radius:100px;">Beginner</span></div>
+          <h3 data-i18n="edu.c1t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:21px;color:#fff;margin:0 0 10px;">Python for AI agents</h3>
+          <p data-i18n="edu.c1b" style="font-size:15px;color:#A0AEC0;margin:0 0 20px;line-height:1.6;">From zero to your first autonomous agent. Async, tool-calling and clean architecture.</p>
+          <div style="display:flex;align-items:center;gap:16px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);"><span data-i18n="edu.c1meta" style="font-size:13px;color:#A0AEC0;">8 modules · 6h</span><span data-goto-order="" style="margin-inline-start:auto;font-size:14px;font-weight:600;color:#00D9C6;cursor:pointer;">Enroll →</span></div>
+        </div>
+        <div data-reveal="" data-reveal-delay="80" data-card="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:28px;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;"><div style="width:46px;height:46px;border-radius:13px;background:rgba(0,217,198,.1);border:1px solid rgba(0,217,198,.25);display:flex;align-items:center;justify-content:center;"><span style="width:16px;height:16px;border:2.5px solid #00D9C6;border-radius:50%;"></span></div><span data-i18n="edu.lvl2" style="font-size:12px;font-weight:600;color:#A0AEC0;border:1px solid rgba(255,255,255,.12);padding:5px 11px;border-radius:100px;">Intermediate</span></div>
+          <h3 data-i18n="edu.c2t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:21px;color:#fff;margin:0 0 10px;">Social bots &amp; automation</h3>
+          <p data-i18n="edu.c2b" style="font-size:15px;color:#A0AEC0;margin:0 0 20px;line-height:1.6;">Design, build and ship always-on bots across platforms with safe handoffs.</p>
+          <div style="display:flex;align-items:center;gap:16px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);"><span data-i18n="edu.c2meta" style="font-size:13px;color:#A0AEC0;">10 modules · 9h</span><span data-goto-order="" style="margin-inline-start:auto;font-size:14px;font-weight:600;color:#00D9C6;cursor:pointer;">Enroll →</span></div>
+        </div>
+        <div data-reveal="" data-reveal-delay="160" data-card="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:28px;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;"><div style="width:46px;height:46px;border-radius:13px;background:rgba(0,217,198,.1);border:1px solid rgba(0,217,198,.25);display:flex;align-items:center;justify-content:center;"><span style="width:18px;height:3px;background:#00D9C6;border-radius:2px;box-shadow:0 6px 0 #00D9C6,0 -6px 0 #00D9C6;"></span></div><span data-i18n="edu.lvl3" style="font-size:12px;font-weight:600;color:#A0AEC0;border:1px solid rgba(255,255,255,.12);padding:5px 11px;border-radius:100px;">Advanced</span></div>
+          <h3 data-i18n="edu.c3t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:21px;color:#fff;margin:0 0 10px;">Production AI &amp; evals</h3>
+          <p data-i18n="edu.c3b" style="font-size:15px;color:#A0AEC0;margin:0 0 20px;line-height:1.6;">Monitoring, evals and guardrails to run agents unattended at scale.</p>
+          <div style="display:flex;align-items:center;gap:16px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);"><span data-i18n="edu.c3meta" style="font-size:13px;color:#A0AEC0;">12 modules · 11h</span><span data-goto-order="" style="margin-inline-start:auto;font-size:14px;font-weight:600;color:#00D9C6;cursor:pointer;">Enroll →</span></div>
+        </div>
+      </div>
+    </section>
+    <section style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:clamp(20px,3vh,32px) clamp(20px,5vw,72px) clamp(60px,8vh,100px);">
+      <div data-reveal="" style="position:relative;overflow:hidden;border-radius:24px;border:1px solid rgba(0,217,198,.18);background:linear-gradient(135deg,rgba(0,217,198,.08),rgba(8,17,31,.6) 60%);padding:clamp(32px,4vw,56px);display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between;">
+        <div style="flex:1 1 360px;min-width:280px;">
+          <h2 data-i18n="edu.cohort.t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(24px,3vw,38px);line-height:1.12;letter-spacing:-.02em;color:#fff;margin:0 0 12px;">Next live cohort starts July 7</h2>
+          <p data-i18n="edu.cohort.b" style="font-size:16px;color:#D9E2EC;margin:0;max-width:460px;">Four weeks, live sessions, real projects and direct feedback from our senior engineers. Limited to 20 seats.</p>
+        </div>
+        <a href="#" data-goto="order" data-magnetic="" data-i18n="edu.cohort.cta" style="display:inline-flex;align-items:center;gap:9px;background:linear-gradient(135deg,#00D9C6,#00B8D4);color:#04121A;font-weight:700;font-size:16px;padding:15px 30px;border-radius:12px;box-shadow:0 10px 34px rgba(0,217,198,.34);transition:transform .2s,box-shadow .25s;">Reserve a seat →</a>
+      </div>
+    </section>
+  </div>
+  <div data-page="work" style="display:none;">
+    <section style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:clamp(120px,15vh,168px) clamp(20px,5vw,72px) clamp(28px,4vh,44px);">
+      <span data-i18n="ws.kicker" style="display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#00D9C6;font-weight:600;margin-bottom:14px;">Work Samples</span>
+      <h1 data-i18n="ws.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(36px,5vw,64px);line-height:1.05;letter-spacing:-.03em;color:#fff;margin:0 0 16px;max-width:760px;">Selected work, shipped and measured</h1>
+      <p data-i18n="ws.sub" style="font-size:clamp(16px,1.4vw,20px);color:#A0AEC0;margin:0;max-width:560px;">A few of the agents, sites and growth systems we've built — with the outcomes that mattered.</p>
+    </section>
+    <section style="position:relative;z-index:1;max-width:1440px;margin:0 auto;padding:0 clamp(20px,5vw,72px) clamp(60px,8vh,100px);">
+      <div data-wsfilter="" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:clamp(24px,3vw,34px);">
+        <button data-wsf="all" style="border:1px solid rgba(0,217,198,.3);background:rgba(0,217,198,.1);color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:10px 18px;border-radius:100px;cursor:pointer;transition:all .25s;"><span data-i18n="ws.f.all">All</span></button>
+        <button data-wsf="agents" style="border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:10px 18px;border-radius:100px;cursor:pointer;transition:all .25s;"><span data-i18n="ws.f.agents">Agents</span></button>
+        <button data-wsf="web" style="border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:10px 18px;border-radius:100px;cursor:pointer;transition:all .25s;"><span data-i18n="ws.f.web">Web</span></button>
+        <button data-wsf="growth" style="border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:10px 18px;border-radius:100px;cursor:pointer;transition:all .25s;"><span data-i18n="ws.f.growth">Growth</span></button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;">
+        <div data-wscat="agents" data-reveal="" data-card="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div data-imgzoom="" style="height:200px;background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.22,1,.36,1);"><span style="font-family:'Sora',sans-serif;font-size:12px;color:#5b6b82;">[ project shot ]</span></div>
+          <div style="padding:24px;">
+            <span data-i18n="ws.tag.agents" style="font-size:12px;font-weight:600;color:#00D9C6;letter-spacing:.05em;text-transform:uppercase;">AI Agents</span>
+            <h3 data-i18n="ws.1t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:20px;color:#fff;margin:8px 0 8px;">Support agent for Northwind</h3>
+            <p data-i18n="ws.1b" style="font-size:14px;color:#A0AEC0;margin:0 0 16px;line-height:1.6;">An autonomous tier-1 support agent wired into their helpdesk and docs.</p>
+            <div style="display:flex;gap:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);"><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">68%</div><div data-i18n="ws.1m1" style="font-size:12px;color:#A0AEC0;">tickets auto-resolved</div></div><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">4.8/5</div><div data-i18n="ws.1m2" style="font-size:12px;color:#A0AEC0;">CSAT maintained</div></div></div>
+          </div>
+        </div>
+        <div data-wscat="web" data-reveal="" data-reveal-delay="80" data-card="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div data-imgzoom="" style="height:200px;background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.22,1,.36,1);"><span style="font-family:'Sora',sans-serif;font-size:12px;color:#5b6b82;">[ project shot ]</span></div>
+          <div style="padding:24px;">
+            <span data-i18n="ws.tag.web" style="font-size:12px;font-weight:600;color:#00D9C6;letter-spacing:.05em;text-transform:uppercase;">Websites &amp; Apps</span>
+            <h3 data-i18n="ws.2t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:20px;color:#fff;margin:8px 0 8px;">Volta marketing platform rebuild</h3>
+            <p data-i18n="ws.2b" style="font-size:14px;color:#A0AEC0;margin:0 0 16px;line-height:1.6;">A headless, conversion-focused site shipped in five weeks.</p>
+            <div style="display:flex;gap:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);"><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">3x</div><div data-i18n="ws.2m1" style="font-size:12px;color:#A0AEC0;">organic traffic</div></div><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">+44%</div><div data-i18n="ws.2m2" style="font-size:12px;color:#A0AEC0;">signups</div></div></div>
+          </div>
+        </div>
+        <div data-wscat="growth" data-reveal="" data-reveal-delay="160" data-card="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div data-imgzoom="" style="height:200px;background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.22,1,.36,1);"><span style="font-family:'Sora',sans-serif;font-size:12px;color:#5b6b82;">[ project shot ]</span></div>
+          <div style="padding:24px;">
+            <span data-i18n="ws.tag.growth" style="font-size:12px;font-weight:600;color:#00D9C6;letter-spacing:.05em;text-transform:uppercase;">SEO &amp; Growth</span>
+            <h3 data-i18n="ws.3t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:20px;color:#fff;margin:8px 0 8px;">Meridian content engine</h3>
+            <p data-i18n="ws.3b" style="font-size:14px;color:#A0AEC0;margin:0 0 16px;line-height:1.6;">An AI-assisted, human-edited content pipeline driving compounding SEO.</p>
+            <div style="display:flex;gap:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);"><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">182</div><div data-i18n="ws.3m1" style="font-size:12px;color:#A0AEC0;">page-1 keywords</div></div><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">+210%</div><div data-i18n="ws.3m2" style="font-size:12px;color:#A0AEC0;">organic leads</div></div></div>
+          </div>
+        </div>
+        <div data-wscat="agents" data-reveal="" data-card="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div data-imgzoom="" style="height:200px;background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.22,1,.36,1);"><span style="font-family:'Sora',sans-serif;font-size:12px;color:#5b6b82;">[ project shot ]</span></div>
+          <div style="padding:24px;">
+            <span data-i18n="ws.tag.agents" style="font-size:12px;font-weight:600;color:#00D9C6;letter-spacing:.05em;text-transform:uppercase;">AI Agents</span>
+            <h3 data-i18n="ws.4t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:20px;color:#fff;margin:8px 0 8px;">Quanta research copilot</h3>
+            <p data-i18n="ws.4b" style="font-size:14px;color:#A0AEC0;margin:0 0 16px;line-height:1.6;">A Python agent that drafts and cites internal research on demand.</p>
+            <div style="display:flex;gap:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);"><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">11h</div><div data-i18n="ws.4m1" style="font-size:12px;color:#A0AEC0;">saved / analyst / wk</div></div><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">100%</div><div data-i18n="ws.4m2" style="font-size:12px;color:#A0AEC0;">cited sources</div></div></div>
+          </div>
+        </div>
+        <div data-wscat="web" data-reveal="" data-reveal-delay="80" data-card="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div data-imgzoom="" style="height:200px;background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.22,1,.36,1);"><span style="font-family:'Sora',sans-serif;font-size:12px;color:#5b6b82;">[ project shot ]</span></div>
+          <div style="padding:24px;">
+            <span data-i18n="ws.tag.web" style="font-size:12px;font-weight:600;color:#00D9C6;letter-spacing:.05em;text-transform:uppercase;">Websites &amp; Apps</span>
+            <h3 data-i18n="ws.5t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:20px;color:#fff;margin:8px 0 8px;">Helixr commerce app</h3>
+            <p data-i18n="ws.5b" style="font-size:14px;color:#A0AEC0;margin:0 0 16px;line-height:1.6;">A fast storefront with AI product discovery built in.</p>
+            <div style="display:flex;gap:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);"><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">0.6s</div><div data-i18n="ws.5m1" style="font-size:12px;color:#A0AEC0;">median load</div></div><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">+29%</div><div data-i18n="ws.5m2" style="font-size:12px;color:#A0AEC0;">AOV</div></div></div>
+          </div>
+        </div>
+        <div data-wscat="growth" data-reveal="" data-reveal-delay="160" data-card="" style="position:relative;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden;backdrop-filter:blur(14px);transition:transform .4s cubic-bezier(.22,1,.36,1),border-color .4s,box-shadow .4s;" style-hover="transform:translateY(-8px);border-color:rgba(0,217,198,.4);box-shadow:0 24px 50px rgba(0,0,0,.4);">
+          <div data-imgzoom="" style="height:200px;background-image:repeating-linear-gradient(135deg,#101A2B 0 14px,#0D1320 14px 28px);display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.22,1,.36,1);"><span style="font-family:'Sora',sans-serif;font-size:12px;color:#5b6b82;">[ project shot ]</span></div>
+          <div style="padding:24px;">
+            <span data-i18n="ws.tag.growth" style="font-size:12px;font-weight:600;color:#00D9C6;letter-spacing:.05em;text-transform:uppercase;">Social Bots</span>
+            <h3 data-i18n="ws.6t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:20px;color:#fff;margin:8px 0 8px;">Ardent social automation</h3>
+            <p data-i18n="ws.6b" style="font-size:14px;color:#A0AEC0;margin:0 0 16px;line-height:1.6;">Always-on publishing and DM qualification across four platforms.</p>
+            <div style="display:flex;gap:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08);"><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">5x</div><div data-i18n="ws.6m1" style="font-size:12px;color:#A0AEC0;">qualified DMs</div></div><div><div data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;">24/7</div><div data-i18n="ws.6m2" style="font-size:12px;color:#A0AEC0;">coverage</div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div data-page="order" style="display:none;">
+    <section style="position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:clamp(120px,15vh,168px) clamp(20px,5vw,72px) clamp(60px,8vh,100px);">
+      <div style="text-align:center;max-width:680px;margin:0 auto clamp(36px,5vh,52px);">
+        <span data-i18n="ord.kicker" style="display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#00D9C6;font-weight:600;margin-bottom:14px;">Start a project</span>
+        <h1 data-i18n="ord.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(34px,4.5vw,60px);line-height:1.06;letter-spacing:-.03em;color:#fff;margin:0 0 14px;">Tell us what you need</h1>
+        <p data-i18n="ord.sub" style="font-size:clamp(16px,1.4vw,19px);color:#A0AEC0;margin:0;">A few quick details and we'll come back within one business day with a plan and a fixed quote.</p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(20px,3vw,32px);align-items:flex-start;">
+        <form data-order-form="" style="flex:2 1 420px;min-width:300px;background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:clamp(24px,3.5vw,40px);backdrop-filter:blur(14px);">
+          <label data-i18n="ord.l.service" style="display:block;font-size:14px;font-weight:600;color:#D9E2EC;margin-bottom:12px;">What can we build for you?</label>
+          <div data-order-services="" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:26px;">
+            <button type="button" data-oservice="AI Agent" style="display:flex;align-items:center;gap:9px;border:1px solid rgba(0,217,198,.3);background:rgba(0,217,198,.1);color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:13px 14px;border-radius:12px;cursor:pointer;transition:all .25s;text-align:start;"><span style="width:8px;height:8px;border-radius:50%;background:#00D9C6;flex-shrink:0;"></span><span data-i18n="tab.0">AI Agents</span></button>
+            <button type="button" data-oservice="Website or App" style="display:flex;align-items:center;gap:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:13px 14px;border-radius:12px;cursor:pointer;transition:all .25s;text-align:start;"><span style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0;"></span><span data-i18n="tab.1">Websites &amp; Apps</span></button>
+            <button type="button" data-oservice="Social Bot" style="display:flex;align-items:center;gap:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:13px 14px;border-radius:12px;cursor:pointer;transition:all .25s;text-align:start;"><span style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0;"></span><span data-i18n="tab.2">Social Bots</span></button>
+            <button type="button" data-oservice="SEO and Growth" style="display:flex;align-items:center;gap:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:13px 14px;border-radius:12px;cursor:pointer;transition:all .25s;text-align:start;"><span style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2);flex-shrink:0;"></span><span data-i18n="tab.3">SEO &amp; Growth</span></button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:18px;">
+            <div><label data-i18n="ord.l.name" style="display:block;font-size:13px;color:#A0AEC0;margin-bottom:8px;">Your name</label><input data-ofield="name" type="text" style="width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px 14px;color:#fff;font-family:'Inter',sans-serif;font-size:15px;outline:none;transition:border-color .25s;" style-focus="border-color:rgba(0,217,198,.5);"></div>
+            <div><label data-i18n="ord.l.email" style="display:block;font-size:13px;color:#A0AEC0;margin-bottom:8px;">Email</label><input data-ofield="email" type="email" style="width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px 14px;color:#fff;font-family:'Inter',sans-serif;font-size:15px;outline:none;transition:border-color .25s;" style-focus="border-color:rgba(0,217,198,.5);"></div>
+          </div>
+          <label data-i18n="ord.l.budget" style="display:block;font-size:13px;color:#A0AEC0;margin-bottom:8px;">Budget range</label>
+          <div data-order-budget="" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px;">
+            <button type="button" data-obudget="<$5k" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;padding:9px 15px;border-radius:100px;cursor:pointer;transition:all .25s;">&lt; $5k</button>
+            <button type="button" data-obudget="$5k–$15k" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;padding:9px 15px;border-radius:100px;cursor:pointer;transition:all .25s;">$5k–$15k</button>
+            <button type="button" data-obudget="$15k–$50k" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;padding:9px 15px;border-radius:100px;cursor:pointer;transition:all .25s;">$15k–$50k</button>
+            <button type="button" data-obudget="$50k+" style="border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.02);color:#A0AEC0;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;padding:9px 15px;border-radius:100px;cursor:pointer;transition:all .25s;">$50k+</button>
+          </div>
+          <label data-i18n="ord.l.details" style="display:block;font-size:13px;color:#A0AEC0;margin-bottom:8px;">Tell us about the project</label>
+          <textarea data-ofield="details" rows="4" style="width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:11px;padding:13px 14px;color:#fff;font-family:'Inter',sans-serif;font-size:15px;outline:none;resize:vertical;transition:border-color .25s;margin-bottom:22px;" style-focus="border-color:rgba(0,217,198,.5);"></textarea>
+          <button type="button" data-order-submit="" data-magnetic="" style="width:100%;display:inline-flex;align-items:center;justify-content:center;gap:9px;background:linear-gradient(135deg,#00D9C6,#00B8D4);color:#04121A;font-weight:700;font-size:16px;padding:16px 28px;border-radius:13px;border:none;box-shadow:0 10px 34px rgba(0,217,198,.34);cursor:pointer;transition:transform .2s,box-shadow .25s;"><span data-i18n="ord.submit">Send project request</span></button>
+          <div data-order-success="" style="display:none;align-items:center;gap:10px;margin-top:16px;background:rgba(0,217,198,.08);border:1px solid rgba(0,217,198,.25);border-radius:12px;padding:14px 16px;"><span style="width:22px;height:22px;border-radius:50%;background:#00D9C6;color:#04121A;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;">✓</span><span data-i18n="ord.success" style="font-size:14px;color:#D9E2EC;">Thanks — request received. We'll reply within one business day.</span></div>
+        </form>
+        <div style="flex:1 1 260px;min-width:240px;display:flex;flex-direction:column;gap:16px;">
+          <div style="background:linear-gradient(160deg,rgba(23,35,56,.55),rgba(13,19,32,.55));border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:24px;backdrop-filter:blur(14px);">
+            <div data-i18n="ord.sum.t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:15px;color:#fff;margin-bottom:16px;">What happens next</div>
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <div style="display:flex;gap:12px;"><span style="width:26px;height:26px;border-radius:8px;background:rgba(0,217,198,.12);border:1px solid rgba(0,217,198,.25);color:#00D9C6;font-weight:700;font-size:13px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">1</span><div><div data-i18n="ord.s1t" style="font-size:14px;color:#fff;font-weight:600;">We review &amp; scope</div><div data-i18n="ord.s1b" style="font-size:13px;color:#A0AEC0;line-height:1.5;">Within one business day.</div></div></div>
+              <div style="display:flex;gap:12px;"><span style="width:26px;height:26px;border-radius:8px;background:rgba(0,217,198,.12);border:1px solid rgba(0,217,198,.25);color:#00D9C6;font-weight:700;font-size:13px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">2</span><div><div data-i18n="ord.s2t" style="font-size:14px;color:#fff;font-weight:600;">Plan &amp; fixed quote</div><div data-i18n="ord.s2b" style="font-size:13px;color:#A0AEC0;line-height:1.5;">Clear scope, timeline, price.</div></div></div>
+              <div style="display:flex;gap:12px;"><span style="width:26px;height:26px;border-radius:8px;background:rgba(0,217,198,.12);border:1px solid rgba(0,217,198,.25);color:#00D9C6;font-weight:700;font-size:13px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">3</span><div><div data-i18n="ord.s3t" style="font-size:14px;color:#fff;font-weight:600;">Kickoff &amp; build</div><div data-i18n="ord.s3b" style="font-size:13px;color:#A0AEC0;line-height:1.5;">First version in 2–4 weeks.</div></div></div>
+            </div>
+          </div>
+          <div style="background:linear-gradient(135deg,rgba(0,217,198,.08),rgba(8,17,31,.5));border:1px solid rgba(0,217,198,.18);border-radius:18px;padding:24px;">
+            <div data-i18n="ord.chat.t" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:15px;color:#fff;margin-bottom:8px;">Not sure what you need?</div>
+            <p data-i18n="ord.chat.b" style="font-size:13px;color:#A0AEC0;margin:0 0 14px;line-height:1.55;">Ask our AI assistant — it can scope ideas and answer questions instantly.</p>
+            <button type="button" data-open-chat="" style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;padding:11px 18px;border-radius:11px;cursor:pointer;transition:all .25s;"><span style="width:7px;height:7px;border-radius:50%;background:#00D9C6;"></span><span data-i18n="ord.chat.cta">Chat with AI</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer style="position:relative;z-index:1;border-top:1px solid rgba(255,255,255,.07);background:rgba(5,11,20,.6);">
+    <div style="max-width:1440px;margin:0 auto;padding:clamp(48px,6vw,72px) clamp(20px,5vw,72px) 32px;">
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(36px,5vw,80px);justify-content:space-between;margin-bottom:48px;">
+        <div style="flex:1 1 280px;min-width:240px;max-width:360px;">
+          <a href="#top" style="display:flex;align-items:center;gap:11px;margin-bottom:18px;">
+            <span style="display:inline-flex;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#00D9C6,#00B8D4);align-items:center;justify-content:center;"><span style="width:13px;height:13px;border:2.5px solid #050B14;border-radius:4px;transform:rotate(45deg);"></span></span>
+            <span data-font-head="" style="font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:#fff;letter-spacing:-.02em;">CyTech<span style="color:#00D9C6;">Link</span></span>
+          </a>
+          <p data-i18n="foot.blurb" style="font-size:15px;color:#A0AEC0;margin:0 0 20px;line-height:1.6;max-width:300px;">Autonomous AI agents, websites, social bots and growth — designed, built and run by one senior team.</p>
+          <div style="display:flex;gap:10px;">
+            <span style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center;color:#A0AEC0;font-size:13px;font-weight:600;">in</span>
+            <span style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center;color:#A0AEC0;font-size:13px;font-weight:600;">X</span>
+            <span style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center;color:#A0AEC0;font-size:13px;font-weight:600;">Ig</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:clamp(36px,5vw,72px);">
+          <div>
+            <div data-i18n="foot.c1" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:14px;color:#fff;margin-bottom:16px;">Services</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <a href="#platform" data-footlink="" data-i18n="tab.0" style="font-size:14px;color:#A0AEC0;transition:color .25s;">AI Agents</a>
+              <a href="#platform" data-footlink="" data-i18n="tab.1" style="font-size:14px;color:#A0AEC0;transition:color .25s;">Websites &amp; Apps</a>
+              <a href="#platform" data-footlink="" data-i18n="tab.2" style="font-size:14px;color:#A0AEC0;transition:color .25s;">Social Bots</a>
+              <a href="#platform" data-footlink="" data-i18n="tab.3" style="font-size:14px;color:#A0AEC0;transition:color .25s;">SEO &amp; Growth</a>
+            </div>
+          </div>
+          <div>
+            <div data-i18n="foot.c2" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:14px;color:#fff;margin-bottom:16px;">Company</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <a href="#work" data-footlink="" data-i18n="foot.about" style="font-size:14px;color:#A0AEC0;transition:color .25s;">About</a>
+              <a href="#work" data-footlink="" data-i18n="nav.work" style="font-size:14px;color:#A0AEC0;transition:color .25s;">Work</a>
+              <a href="#faq" data-footlink="" data-i18n="nav.faq" style="font-size:14px;color:#A0AEC0;transition:color .25s;">FAQ</a>
+              <a href="#cta" data-footlink="" data-i18n="foot.contact" style="font-size:14px;color:#A0AEC0;transition:color .25s;">Contact</a>
+            </div>
+          </div>
+          <div>
+            <div data-i18n="foot.c3" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:14px;color:#fff;margin-bottom:16px;">Get in touch</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <a href="mailto:hello@cytechlink.com" data-footlink="" style="font-size:14px;color:#A0AEC0;transition:color .25s;">huxuniverse@gmail.com</a>
+              <span data-i18n="foot.hours" style="font-size:14px;color:#A0AEC0;">Mon–Fri · 9–18</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;padding-top:26px;border-top:1px solid rgba(255,255,255,.07);">
+        <span data-i18n="foot.copy" style="font-size:13px;color:#5b6b82;">© 2026 CyTechLink. All rights reserved.</span>
+        <div style="display:flex;gap:24px;">
+          <a href="#" data-footlink="" data-i18n="foot.privacy" style="font-size:13px;color:#5b6b82;transition:color .25s;">Privacy</a>
+          <a href="#" data-footlink="" data-i18n="foot.terms" style="font-size:13px;color:#5b6b82;transition:color .25s;">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button data-chat-fab="" aria-label="Chat with AI" style="position:fixed;bottom:24px;inset-inline-end:24px;z-index:120;display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#00D9C6,#00B8D4);color:#04121A;border:none;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;padding:14px 20px;border-radius:100px;box-shadow:0 12px 38px rgba(0,217,198,.45);cursor:pointer;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s;">
+    <span style="width:9px;height:9px;border-radius:50%;background:#04121A;box-shadow:0 0 0 4px rgba(4,18,26,.2);"></span>
+    <span data-i18n="chat.fab">Chat with AI</span>
+  </button>
+
+  <div data-chat-panel="" style="position:fixed;bottom:24px;inset-inline-end:24px;z-index:121;width:min(380px,calc(100vw - 32px));height:min(560px,calc(100vh - 48px));display:none;flex-direction:column;background:linear-gradient(165deg,rgba(16,26,43,.96),rgba(8,17,31,.98));border:1px solid rgba(0,217,198,.2);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.6);backdrop-filter:blur(20px);overflow:hidden;">
+    <div style="display:flex;align-items:center;gap:11px;padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.08);">
+      <span style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#00D9C6,#00B8D4);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="width:12px;height:12px;border:2.5px solid #04121A;border-radius:4px;transform:rotate(45deg);"></span></span>
+      <div style="flex:1;min-width:0;">
+        <div data-i18n="chat.title" data-font-head="" style="font-family:'Sora',sans-serif;font-weight:600;font-size:15px;color:#fff;">CyTechLink Assistant</div>
+        <div style="display:flex;align-items:center;gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:#00D9C6;box-shadow:0 0 8px #00D9C6;"></span><span data-i18n="chat.status" style="font-size:12px;color:#A0AEC0;">Online · replies instantly</span></div>
+      </div>
+      <button data-chat-close="" aria-label="Close" style="width:32px;height:32px;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#A0AEC0;font-size:18px;line-height:1;cursor:pointer;flex-shrink:0;">×</button>
+    </div>
+    <div data-chat-log="" style="flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px;">
+      <div data-chat-msg="bot" style="align-self:flex-start;max-width:85%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px 14px 14px 4px;padding:12px 14px;font-size:14px;color:#D9E2EC;line-height:1.55;"><span data-i18n="chat.hello">Hi! I'm the CyTechLink assistant. Ask me about AI agents, websites, social bots, SEO — or describe your project and I'll help scope it.</span></div>
+    </div>
+    <div data-chat-suggest="" style="display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 10px;">
+      <button data-chat-chip="" style="background:rgba(0,217,198,.08);border:1px solid rgba(0,217,198,.22);color:#2CF5E4;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:7px 12px;border-radius:100px;cursor:pointer;" data-i18n="chat.chip1">Build me an AI agent</button>
+      <button data-chat-chip="" style="background:rgba(0,217,198,.08);border:1px solid rgba(0,217,198,.22);color:#2CF5E4;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;padding:7px 12px;border-radius:100px;cursor:pointer;" data-i18n="chat.chip2">How much is a website?</button>
+    </div>
+    <div style="display:flex;gap:9px;padding:12px 14px 14px;border-top:1px solid rgba(255,255,255,.08);">
+      <input data-chat-input="" type="text" style="flex:1;min-width:0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:12px 14px;color:#fff;font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color .25s;" style-focus="border-color:rgba(0,217,198,.5);">
+      <button data-chat-send="" aria-label="Send" style="width:44px;height:44px;flex-shrink:0;border-radius:12px;border:none;background:linear-gradient(135deg,#00D9C6,#00B8D4);color:#04121A;font-size:18px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;">↑</button>
+    </div>
+  </div>
+
 </div>
-
-<section id="services">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">چه می‌سازم</span>
-      <h2 class="type-on">یک تیمِ کامل، در یک برند</h2>
-      <p>از ایده تا اجرا — هرچی برای دیجیتالی‌کردن و خودکارسازی کسب‌وکارت لازم داری.</p>
-    </div>
-    <div class="grid g3">
-      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2M9 9h6v6H9z"/></svg></div><h3>ایجنت‌های هوش مصنوعی</h3><p>دستیارهای هوشمندی که حرف می‌فهمن، تصمیم می‌گیرن و کار انجام می‌دن — نه فقط یک چت‌بات ساده.</p></div>
-      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4M8 8h8a2 2 0 012 2v8a2 2 0 01-2 2H8a2 2 0 01-2-2v-8a2 2 0 012-2zM9 14h.01M15 14h.01M3 13v2M21 13v2"/></svg></div><h3>بات‌ها و اتوماسیون</h3><p>بات‌های تلگرام، واتساپ و اینستاگرام و خودکارسازی فرایندهای تکراری با پایتون.</p></div>
-      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M8 21h8M12 18v3"/></svg></div><h3>وب‌اپ و طراحی سایت</h3><p>سایت‌ها و وب‌اپ‌های سریع، مدرن و واکنش‌گرا که روی موبایل هم بی‌نقص کار می‌کنن.</p></div>
-      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 22a10 10 0 010-20"/></svg></div><h3>گرافیک و برندینگ</h3><p>لوگو، هویت بصری و طراحی‌هایی که کسب‌وکارت رو حرفه‌ای و قابل‌اعتماد نشون می‌دن.</p></div>
-      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></div><h3>سئو و بلاگ آموزشی</h3><p>محتوای آموزشی و بهینه‌سازی برای موتورهای جستجو تا مشتری خودش پیدات کنه.</p></div>
-      <div class="card reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l18-8-8 18-2-7-8-3zM13 13l-2 8"/></svg></div><h3>دیجیتال مارکتینگ</h3><p>استراتژی محتوا برای اینستاگرام، لینکدین و یوتیوب تا برندت دیده بشه و رشد کنه.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="product" class="product">
-  <div class="wrap prod-grid">
-    <div>
-      <span class="eyebrow">محصول پرچم‌دار</span>
-      <h2 class="type-on">یک دستیار هوشمند، سه چهره</h2>
-      <p class="lead">یک موتور قدرتمند که برای هر کسب‌وکار، لباس خودش رو می‌پوشه و ۲۴ ساعته سرِ کاره.</p>
-      <div class="faces">
-        <span class="face on">منشی هوشمند مطب</span>
-        <span class="face">کنسیرژ هوشمند هتل</span>
-        <span class="face">دستیار سفارش کافه</span>
-      </div>
-      <ul class="benefits">
-        <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> به دایرکت و پیام‌های تکراری، آنی و شبانه‌روزی جواب می‌ده.</li>
-        <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> نوبت و رزرو می‌گیره و خودش مدیریت می‌کنه.</li>
-        <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> یادآور می‌فرسته تا غیبت و کنسلی کم بشه.</li>
-        <li><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg></span> چندزبانه — برای مهمان‌های خارجیِ هتل‌ها.</li>
-      </ul>
-    </div>
-    <div class="prod-card reveal">
-      <div class="stat"><b>۲۴/۷</b><span>پاسخ‌گویی بدون وقفه، حتی نیمه‌شب</span></div>
-      <div class="stat"><b>−۴۰٪</b><span>کاهش غیبت بیمار با یادآوری خودکار</span></div>
-      <div class="stat"><b>۳×</b><span>سرعت بیشتر در پاسخ به مشتری</span></div>
-      <div class="stat"><b>۰</b><span>پیامِ بی‌جوابِ از دست‌رفته</span></div>
-    </div>
-  </div>
-</section>
-
-<section id="audience">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">برای چه کسانی</span>
-      <h2 class="type-on">هر کسب‌وکار، یک راه‌حل</h2>
-      <p>محصول یکیه، ولی برای دردِ مشخصِ هر صنف، دقیق تنظیم می‌شه.</p>
-    </div>
-    <div class="grid g3">
-      <div class="card aud-card reveal"><span class="tag">CLINICS</span><h3>مطب‌ها و کلینیک‌ها</h3><p>دیگه دایرکت‌های اینستاگرام بی‌جواب نمی‌مونه. منشی هوشمند نوبت می‌ده، به سوال بیمار جواب می‌ده و وقتِ منشی واقعی‌ات رو آزاد می‌کنه.</p></div>
-      <div class="card aud-card reveal"><span class="tag">HOTELS</span><h3>بوتیک‌هتل‌ها</h3><p>کنسیرژ هوشمندِ چندزبانه که به مهمان‌های داخلی و خارجی رزرو می‌ده، به سوال‌ها جواب می‌ده و تجربه‌ای پرمیوم می‌سازه.</p></div>
-      <div class="card aud-card reveal"><span class="tag">BUSINESS</span><h3>کافه‌ها و کسب‌وکارها</h3><p>سفارش‌گیری، رزرو میز و پاسخ به سوال‌های پرتکرار — همه خودکار، تا تو روی کیفیت تمرکز کنی.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="process">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">چطور پیش می‌ریم</span>
-      <h2 class="type-on">از گفت‌وگو تا تحویل، در ۴ قدم</h2>
-    </div>
-    <div class="steps">
-      <div class="step reveal"><div class="no">۱</div><h3>مشاوره و نیازسنجی</h3><p>یک گفت‌وگوی رایگان تا بفهمم دقیقاً چه چیزی برات بیشترین ارزش رو می‌سازه.</p></div>
-      <div class="step reveal"><div class="no">۲</div><h3>طراحی و ساخت</h3><p>دستیار یا سیستم رو متناسب با کسب‌وکار تو طراحی و آماده می‌کنم.</p></div>
-      <div class="step reveal"><div class="no">۳</div><h3>راه‌اندازی</h3><p>روی کانال‌های خودت (اینستاگرام، واتساپ، سایت) نصب و فعال می‌شه.</p></div>
-      <div class="step reveal"><div class="no">۴</div><h3>پشتیبانی ماهانه</h3><p>به‌روزرسانی، بهبود و پشتیبانی همیشگی تا همه‌چی روان بمونه.</p></div>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="wrap promise">
-    <div class="sec-head">
-      <span class="eyebrow">قولِ cytechlink</span>
-      <h2 class="type-on">تکنولوژیِ پیچیده، تجربه‌ی ساده</h2>
-    </div>
-    <div class="promise-grid">
-      <div class="p-item reveal"><div class="p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div><h3>داده‌ات مال خودته</h3><p>اطلاعات کسب‌وکار و مشتری‌هات همیشه در کنترل خودته — بدون استثنا.</p></div>
-      <div class="p-item reveal"><div class="p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg></div><h3>تحویل سریع</h3><p>راه‌اندازیِ چابک و مرحله‌به‌مرحله — نتیجه رو زود می‌بینی، نه چند ماه دیگه.</p></div>
-      <div class="p-item reveal"><div class="p-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></div><h3>پشتیبانی واقعی</h3><p>یک آدم واقعی پشت برنده — نه تیکتِ بی‌جواب و رباتِ سرگردان.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="blog">
-  <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow">از بلاگ</span>
-      <h2 class="type-on">یاد بگیر، رشد کن</h2>
-      <p>راهنماهای کاربردی درباره‌ی هوش مصنوعی، اتوماسیون و رشد کسب‌وکار.</p>
-    </div>
-    <div class="grid g3">
-      <a href="#" class="card blog-card reveal"><div class="thumb"></div><div class="body"><span class="cat">هوش مصنوعی</span><h3>چطور یک منشی هوشمند، مطبت رو متحول می‌کنه؟</h3><span class="more">ادامه ←</span></div></a>
-      <a href="#" class="card blog-card reveal"><div class="thumb t2"></div><div class="body"><span class="cat">اتوماسیون</span><h3>۵ کار تکراری که همین امروز می‌تونی خودکار کنی</h3><span class="more">ادامه ←</span></div></a>
-      <a href="#" class="card blog-card reveal"><div class="thumb t3"></div><div class="body"><span class="cat">رشد کسب‌وکار</span><h3>راهنمای سئو برای کسب‌وکارهای محلی در ۲۰۲۶</h3><span class="more">ادامه ←</span></div></a>
-    </div>
-  </div>
-</section>
-
-<section id="contact" class="cta-final">
-  <div class="wrap">
-    <div class="cta-box reveal">
-      <h2>آماده‌ای کسب‌وکارت رو خودکار کنی؟</h2>
-      <p>یک گفت‌وگوی کوتاه و رایگان، تا ببینیم هوش مصنوعی دقیقاً کجا می‌تونه برات وقت و مشتری بسازه.</p>
-      <div class="actions">
-        <a href="https://wa.me/+989106666902" class="btn btn-gold">شروع گفت‌وگو در واتساپ</a>
-        <a href="mailto:huxuniverse@gmail.com" class="btn btn-ghost" style="color:#fff;border-color:rgba(255,255,255,.3)">ایمیل بزن</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer class="footer" id="footer">
-  <div class="wrap">
-    <div class="quote">
-      <p>«بهترین راه برای پیش‌بینی آینده، ساختنِ آن است.»</p>
-      <span>— آلن کی</span>
-    </div>
-    <div class="foot-grid">
-      <div>
-        <a href="#" class="brand"><svg width="28" height="28" viewBox="0 0 48 48" aria-hidden="true"><line x1="15" y1="24" x2="33" y2="24" stroke="#0F2C4C" stroke-width="4" stroke-linecap="round"/><circle cx="15" cy="24" r="7.5" fill="#0F2C4C"/><circle cx="33" cy="24" r="7.5" fill="#12A594"/></svg><span class="lat"><span class="c1">cytech</span><span class="c2">link</span></span></a>
-        <p class="tag">دستیارها و سیستم‌های هوش مصنوعی برای مطب‌ها، هتل‌ها و کسب‌وکارها. شیراز، ایران — و همه‌جای دنیا.</p>
-        <div class="socials">
-          <a href="https://github.com/cytechlink" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.4-3.4-1.4-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.7 1a9.3 9.3 0 015 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5 3.9-1.3 6.8-5.1 6.8-9.6C22 6.6 17.5 2 12 2z"/></svg></a>
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
-          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2zM8.5 18H6V10h2.5v8zM7.2 8.8a1.4 1.4 0 110-2.8 1.4 1.4 0 010 2.8zM18 18h-2.5v-4.2c0-1-.4-1.7-1.3-1.7-.7 0-1.1.5-1.3 1-.1.2-.1.4-.1.7V18H10s.03-7.3 0-8h2.5v1.1c.3-.5.9-1.3 2.3-1.3 1.7 0 3 1.1 3 3.5V18z"/></svg></a>
-          <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 12s0-3.2-.4-4.7c-.2-.8-.9-1.5-1.7-1.7C19.4 5.2 12 5.2 12 5.2s-7.4 0-8.9.4c-.8.2-1.5.9-1.7 1.7C1 8.8 1 12 1 12s0 3.2.4 4.7c.2.8.9 1.5 1.7 1.7 1.5.4 8.9.4 8.9.4s7.4 0 8.9-.4c.8-.2 1.5-.9 1.7-1.7C23 15.2 23 12 23 12zM9.8 15.3V8.7l5.7 3.3-5.7 3.3z"/></svg></a>
-        </div>
-      </div>
-      <div class="foot-col"><h4>خدمات</h4><a href="#product">منشی هوشمند مطب</a><a href="#product">کنسیرژ هتل</a><a href="#services">طراحی سایت و وب‌اپ</a><a href="#services">دیجیتال مارکتینگ</a></div>
-      <div class="foot-col"><h4>ارتباط</h4><a href="mailto:hello@cytechlink.com">hello@cytechlink.com</a><a href="#">واتساپ: +989106666902</a><a href="#blog">بلاگ</a><a href="#contact">مشاوره‌ی رایگان</a></div>
-    </div>
-    <p class="copy">© ۲۰۲۶ cytechlink — ساخته‌شده  </p>
-  </div>
-</footer>
-
-<script>
-const RM=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-/* mobile nav */
-const burger=document.getElementById('burger'),nav=document.getElementById('navlinks');
-burger&&burger.addEventListener('click',()=>nav.classList.toggle('open'));
-nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
-
-/* scroll reveal */
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.14});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-/* typewriter rotating word in hero */
-const rotEl=document.getElementById('rot');
-const words=['مطب','هتل','کافه','کلینیک','کسب‌وکار'];
-if(rotEl&&!RM){
-  let wi=0,ci=0,del=false;
-  rotEl.textContent='';
-  (function tick(){
-    const w=words[wi];
-    rotEl.textContent=del?w.slice(0,--ci):w.slice(0,++ci);
-    let d=del?55:110;
-    if(!del&&ci===w.length){d=1300;del=true}
-    else if(del&&ci===0){del=false;wi=(wi+1)%words.length;d=300}
-    setTimeout(tick,d);
-  })();
-}
-
-/* section titles type-on scroll */
-const tio=new IntersectionObserver(es=>es.forEach(e=>{
-  if(!e.isIntersecting)return;
-  const el=e.target;tio.unobserve(el);
-  if(RM){el.classList.add('go');return}
-  const txt=el.textContent;el.textContent='';el.classList.add('go');
-  let i=0;(function t(){el.textContent=txt.slice(0,i++);if(i<=txt.length)setTimeout(t,28)})();
-}),{threshold:.6});
-document.querySelectorAll('.type-on').forEach(el=>tio.observe(el));
-
-/* node network canvas */
-(function(){
-  const c=document.getElementById('nodes');if(!c)return;
-  const ctx=c.getContext('2d');let w,h,pts,raf;
-  const ink='15,44,76',teal='18,165,148';
-  function size(){const r=c.parentElement.getBoundingClientRect();w=c.width=r.width;h=c.height=r.height;
-    const n=Math.min(46,Math.floor(w/26));
-    pts=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.32,vy:(Math.random()-.5)*.32,r:Math.random()*1.8+1.2}));}
-  function draw(){ctx.clearRect(0,0,w,h);
-    for(let i=0;i<pts.length;i++){const p=pts[i];
-      for(let j=i+1;j<pts.length;j++){const q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=Math.hypot(dx,dy);
-        if(d<128){ctx.strokeStyle='rgba('+ink+','+(.16*(1-d/128))+')';ctx.lineWidth=.6;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();}}
-      p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;
-      ctx.fillStyle=i%4===0?'rgba('+teal+',.85)':'rgba('+ink+',.5)';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fill();}
-    raf=requestAnimationFrame(draw);}
-  size();if(RM){draw();cancelAnimationFrame(raf);draw();}else draw();
-  addEventListener('resize',()=>{cancelAnimationFrame(raf);size();draw();});
-})();
-
-/* interactive chat */
-(function(){
-  const feed=document.getElementById('feed'),input=document.getElementById('chatText'),send=document.getElementById('chatSend'),sugg=document.getElementById('sugg');
-  if(!feed)return;
-  const scroll=()=>feed.scrollTop=feed.scrollHeight;
-  function bubble(text,who){const b=document.createElement('div');b.className='bubble '+who;b.innerHTML=text;feed.appendChild(b);scroll();}
-  function typing(cb){const t=document.createElement('div');t.className='typing';t.innerHTML='<span></span><span></span><span></span>';feed.appendChild(t);scroll();
-    setTimeout(()=>{t.remove();cb();},RM?200:900);}
-  function reply(q){
-    q=q.trim();
-    let a="خوشحال می‌شم کمک کنم! می‌تونی نوبت بگیری، ساعت کاری بپرسی یا درباره‌ی هزینه‌ها سوال کنی. 🌿";
-    if(/نوبت|وقت|رزرو/.test(q))a="حتماً! فردا ساعت ۱۰:۰۰ و ۱۱:۳۰ خالیه. کدوم رو ثبت کنم؟ <span class='ok'>✓</span>";
-    else if(/ساعت|کار|باز/.test(q))a="ما همه‌روزه از ۹ صبح تا ۸ شب باز هستیم — جمعه‌ها تا ۲ بعدازظهر.";
-    else if(/قیمت|هزینه|تعرفه|چند/.test(q))a="هزینه‌ی ویزیت بسته به نوع خدماته. اگه بخوای، الان دقیقش رو برات می‌فرستم و نوبت هم می‌ذارم.";
-    else if(/سلام|درود|خوبی/.test(q))a="سلام! من منشی هوشمندِ این مطبم، ۲۴ ساعته در خدمتم. چه کاری برات انجام بدم؟";
-    typing(()=>bubble(a,'them'));
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;},&quot;defaultLang&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;en&quot;,&quot;fa&quot;],&quot;default&quot;:&quot;en&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;autoplayTestimonials&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;accentGlow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return { rootRef: (el) => { if (el) this.root = el; } };
   }
-  function user(q){bubble(q,'me');reply(q);}
-  send.addEventListener('click',()=>{const v=input.value;if(!v.trim())return;input.value='';user(v);});
-  input.addEventListener('keydown',e=>{if(e.key==='Enter'){const v=input.value;if(!v.trim())return;input.value='';user(v);}});
-  sugg.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>user(b.dataset.q==='نوبت'?'نوبت می‌خوام':b.dataset.q==='ساعت'?'ساعت کاری شما؟':'هزینه ویزیت چقدره؟')));
-  /* autoplay intro */
-  const intro=[['سلام، برای فردا وقت ویزیت دارید؟','them'],['سلام! بله، فردا ساعت ۱۰:۰۰ و ۱۱:۳۰ خالیه. کدوم رو رزرو کنم؟','me'],['ساعت ۱۰ لطفاً','them'],["<span class='ok'>✓</span> ثبت شد. یادآوری رو فردا صبح براتون می‌فرستم 🌿",'me']];
-  let k=0;(function play(){if(k>=intro.length)return;const[t,who]=intro[k++];
-    if(who==='them'&&!RM){typing(()=>{bubble(t,who);setTimeout(play,500);});}
-    else{bubble(t,who);setTimeout(play,RM?150:650);}})();
-})();
+
+  componentDidMount() {
+    this.lang = 'en';
+    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.dict = this.buildDict();
+    this.setupNavbar();
+    this.setupResponsive();
+    this.setupLang();
+    this.setupReveal();
+    this.setupMagnetic();
+    this.setupCounters();
+    this.setupTabs();
+    this.setupImgZoom();
+    this.setupCarousel();
+    this.setupAccordion();
+    this.setupFootLinks();
+    this.setupRouter();
+    this.setupTheme();
+    this.setupChat();
+    this.setupWorkFilter();
+    this.setupOrderForm();
+    if ((this.props.defaultLang ?? 'en') === 'fa') {
+      const btn = this.root.querySelector('[data-lang-toggle]');
+      if (btn) btn.click();
+    }
+    if (this.props.accentGlow === false) {
+      this.root.querySelectorAll('[aria-hidden="true"]').forEach(g => { g.style.display = 'none'; });
+    }
+    window.addEventListener('resize', () => this.applyResponsive());
+  }
+
+  buildDict() {
+    return {
+      en: {},
+      fa: {
+        'nav.services':'خدمات','nav.platform':'پلتفرم','nav.work':'نمونه‌کارها','nav.results':'نتایج','nav.faq':'سوالات','nav.cta':'شروع کنید',
+        'hero.badge':'ایجنت هوش مصنوعی، وب‌سایت و رشد — تحویل‌شده',
+        'hero.title1':'نرم‌افزار هوشمند،','hero.title2':'ساخته‌شده با هوش مصنوعی خودمختار.',
+        'hero.sub':'سای‌تک‌لینک ایجنت‌های هوش مصنوعی، وب‌سایت‌ها، ربات‌های شبکه‌های اجتماعی و سئوی شما را طراحی، می‌سازد و اجرا می‌کند — یک تیم واحد که پایتون و هوش ماشینی را به رشد قابل‌اندازه‌گیری تبدیل می‌کند.',
+        'hero.cta1':'شروع پروژه ←','hero.cta2':'مشاهده پلتفرم',
+        'hero.stat1':'ایجنت مستقرشده','hero.stat2':'حفظ مشتری','hero.stat3':'عملیات خودکار',
+        'logos.label':'مورد اعتماد تیم‌هایی که آینده را می‌سازند',
+        'services.kicker':'چه کاری می‌کنیم','services.title':'یک تیم، کل استک هوش مصنوعی','services.sub':'از ایجنت‌های خودمختار تا وب‌سایت‌ها و کمپین‌هایی که آن‌ها را به کار می‌گیرند — همه را سراسر طراحی، ساخت و اجرا می‌کنیم.',
+        'tab.0':'ایجنت‌های هوش مصنوعی','tab.1':'وب‌سایت و اپلیکیشن','tab.2':'ربات‌های اجتماعی','tab.3':'سئو و رشد',
+        'p0.title':'ایجنت‌های خودمختاری که کار را انجام می‌دهند','p0.body':'ایجنت‌های مبتنی بر پایتون می‌سازیم که پشتیبانی، تحقیق، زمان‌بندی و عملیات را به‌تنهایی انجام می‌دهند — متصل به ابزارهای شما، تحت نظارت و در حال بهبود مداوم.','p0.f1':'استدلال چندمرحله‌ای و استفاده از ابزار','p0.f2':'متصل به CRM، اسناد و APIهای شما','p0.f3':'محافظ‌های انسان‌در‌حلقه',
+        'p1.title':'وب‌سایت و اپ‌هایی که تبدیل می‌کنند','p1.body':'سایت‌ها و وب‌اپ‌های سریع، زیبا و متمرکز بر تبدیل — طراحی، مهندسی و تحویل با هوش مصنوعی که هر مرحله را از متن تا استقرار تسریع می‌کند.','p1.f1':'بارگذاری زیر یک ثانیه، لایت‌هاوس عالی','p1.f2':'CMS هدلس و مالکیت کامل','p1.f3':'تست A/B برای تبدیل',
+        'p2.title':'ربات‌های اجتماعی که هرگز نمی‌خوابند','p2.body':'ربات‌های همیشه‌فعال که منتشر می‌کنند، پاسخ می‌دهند، سرنخ‌ها را ارزیابی و مخاطب شما را در هر پلتفرم رشد می‌دهند — بر اساس برند، طبق برنامه و کاملاً خودکار.','p2.f1':'انتشار خودکار و پاسخ‌های هوشمند','p2.f2':'ارزیابی سرنخ در دایرکت','p2.f3':'تحلیل و گزارش رشد',
+        'p3.title':'سئو و رشد، تجمیعی','p3.body':'سئوی فنی، موتورهای محتوای هوش مصنوعی و کمپین‌های پولی که ماه‌به‌ماه تجمیع می‌شوند — سنجیده در برابر درآمد، نه معیارهای پوچ.','p3.f1':'محتوای هوش مصنوعی در مقیاس، ویرایش انسانی','p3.f2':'ممیزی و رفع مشکلات فنی','p3.f3':'گزارش‌دهی منتسب به درآمد',
+        'feat.kicker':'چرا سای‌تک‌لینک','feat.title':'ساخته‌شده برای تیم‌هایی که سریع حرکت می‌کنند',
+        'feat.1t':'تحویل در چند هفته، نه چند فصل','feat.1b':'تحویل تسریع‌شده با هوش مصنوعی یعنی نرم‌افزار کارآمد به‌سرعت در دستان شما — و تکرار به همان سرعت.',
+        'feat.2t':'متعلق به شما، سراسری','feat.2b':'بدون جعبه سیاه. کد، مدل‌ها و دستورالعمل‌ها را دریافت می‌کنید — مالکیت و شفافیت کامل.',
+        'feat.3t':'پایتون در هسته','feat.3b':'یک استک پایتون آزموده‌شده هر ایجنت و خط لوله را قدرت می‌دهد — توسعه‌پذیر، قابل‌مشاهده و آماده تولید.',
+        'feat.4t':'نظارت همیشه‌فعال','feat.4b':'هر ایجنت ۲۴/۷ با هشدار، ارزیابی و محافظ نظارت می‌شود تا کیفیت هرگز افت نکند.',
+        'feat.5t':'گره‌خورده به درآمد','feat.5b':'در برابر اعدادی که اهمیت دارند می‌سنجیم — خط لوله، تبدیل و حفظ مشتری، نه معیارهای پوچ.',
+        'feat.6t':'یک شریک، نه یک پیمانکار','feat.6b':'یک تیم ارشد در استراتژی، طراحی و مهندسی — همراه شما برای بلندمدت.',
+        'm.1':'ایجنت در حال تولید','m.2':'میانگین افزایش تبدیل','m.3':'وظیفه خودکار / ماه','m.4':'نرخ حفظ مشتری',
+        't.kicker':'داستان مشتریان','t.title':'محبوب تیم‌هایی که با آن‌ها می‌سازیم',
+        't.1q':'سای‌تک‌لینک یک ایجنت پشتیبانی هوش مصنوعی راه‌اندازی کرد که اکنون دوسوم تیکت‌های ما را به‌طور خودکار حل می‌کند. در ماه اول هزینه خود را جبران کرد.','t.1n':'سارا محمدی','t.1r':'معاون عملیات، نورث‌ویند',
+        't.2q':'سایت ما را بازسازی کردند و ربات‌های اجتماعی را متصل کردند — ترافیک ارگانیک سه برابر شد و دایرکت‌ها عملاً خودشان را ارزیابی می‌کنند.','t.2n':'جیمز اوکافور','t.2r':'بنیان‌گذار، ولتا',
+        't.3q':'ارشدترین تیمی که با آن کار کرده‌ایم. عمیق در پایتون، تیز در طراحی و واقعاً درگیر اعداد رشد ما.','t.3n':'لنا برانت','t.3r':'مدیر فنی، مریدین',
+        'faq.kicker':'سوالات متداول','faq.title':'پاسخ سوالات',
+        'faq.1q':'چقدر سریع می‌توانید نسخه اول را تحویل دهید؟','faq.1a':'بیشتر پروژه‌ها در ۲ تا ۴ هفته نسخه اول کارآمد دارند. ایجنت‌ها و ربات‌ها بسته به دامنه و یکپارچه‌سازی‌ها حتی زودتر فعال می‌شوند.',
+        'faq.2q':'آیا کد و ایجنت‌ها متعلق به ماست؟','faq.2a':'بله — کاملاً. کد منبع، تنظیمات مدل و دستورالعمل‌های عملیاتی را نگه می‌دارید. بدون قفل، بدون جعبه سیاه.',
+        'faq.3q':'ربات‌های اجتماعی از چه پلتفرم‌هایی پشتیبانی می‌کنند؟','faq.3a':'اینستاگرام، ایکس، لینکدین، تلگرام، واتساپ و بیشتر. هرجا API رسمی موجود باشد بر آن می‌سازیم و قوانین هر پلتفرم را رعایت می‌کنیم.',
+        'faq.4q':'قیمت‌گذاری پروژه‌ها چگونه است؟','faq.4a':'پروژه‌های با دامنه ثابت برای ساخت‌های یک‌باره، یا قرارداد ماهانه برای ایجنت‌ها، رشد و عملیات مستمر. در یک تماس کوتاه گزینه مناسب را پیشنهاد می‌دهیم.',
+        'cta.title':'بیایید چیزی هوشمند بسازیم','cta.sub':'بگویید روی چه چیزی کار می‌کنید. ظرف یک روز با یک برنامه و قیمت ثابت برمی‌گردیم.','cta.b1':'شروع پروژه ←','cta.b2':'رزرو تماس',
+        'foot.blurb':'ایجنت‌های هوش مصنوعی خودمختار، وب‌سایت‌ها، ربات‌های اجتماعی و رشد — طراحی، ساخت و اجرا توسط یک تیم ارشد.',
+        'foot.c1':'خدمات','foot.c2':'شرکت','foot.c3':'تماس با ما','foot.about':'درباره ما','foot.contact':'تماس','foot.hours':'شنبه–پنجشنبه · ۹–۱۸',
+        'foot.copy':'© ۲۰۲۶ سای‌تک‌لینک. کلیه حقوق محفوظ است.','foot.privacy':'حریم خصوصی','foot.terms':'شرایط',
+        'nav.blog':'بلاگ','nav.education':'آموزش','nav.order':'سفارش',
+        'blog.kicker':'بلاگ و اخبار','blog.title':'سیگنال‌هایی از مرز هوش مصنوعی کاربردی','blog.sub':'یادداشت‌های میدانی، رونمایی‌ها و راهنماهای تیمی که ایجنت‌های خودمختار، سایت‌ها و موتورهای رشد می‌سازد.',
+        'blog.read':'مطالعه مقاله ←','blog.date1':'۱۲ خرداد ۱۴۰۵','blog.h1':'چطور ۴۰ ایجنت تولیدی را بدون حتی یک هشدار نیمه‌شب مستقر کردیم','blog.x1':'ارزیابی‌ها، محافظ‌ها و ابزار پایتونی که به ایجنت‌های خودمختار اجازه می‌دهد بدون نظارت اجرا شوند.',
+        'blog.tag.eng':'مهندسی','blog.tag.growth':'رشد','blog.tag.product':'محصول','blog.date2':'۴ خرداد','blog.date3':'۲۸ اردیبهشت','blog.date4':'۱۹ اردیبهشت',
+        'blog.h2':'یک الگوی پایتون برای فراخوانی مقاوم ابزار در ایجنت‌ها','blog.x2':'تلاش مجدد، تایم‌اوت و کلیدهای ایدمپوتنت که ایجنت‌ها را در خرابی واقعی قابل‌اعتماد نگه می‌دارد.',
+        'blog.h3':'سئو در عصر پاسخ‌های هوش مصنوعی','blog.x3':'چه چیزی برای ترافیک ارگانیک تغییر کرد و موتور محتوایی که برای جلو ماندن اجرا می‌کنیم.',
+        'blog.h4':'طراحی ربات‌های اجتماعی که مردم واقعاً به آن‌ها اعتماد می‌کنند','blog.x4':'لحن، شفافیت و قواعد تحویل که اتوماسیون را انسانی نگه می‌دارد.',
+        'edu.kicker':'آموزش','edu.title':'ساختن با هوش مصنوعی را به‌شکل کاربردی بیاموزید','edu.sub':'دوره‌های عملی و کلاس‌های زنده از مهندسانی که ایجنت‌ها را در تولید مستقر می‌کنند — پایتون، اتوماسیون، رشد.',
+        'edu.lvl1':'مقدماتی','edu.lvl2':'متوسط','edu.lvl3':'پیشرفته',
+        'edu.c1t':'پایتون برای ایجنت‌های هوش مصنوعی','edu.c1b':'از صفر تا اولین ایجنت خودمختار شما. async، فراخوانی ابزار و معماری تمیز.','edu.c1meta':'۸ ماژول · ۶ ساعت',
+        'edu.c2t':'ربات‌های اجتماعی و اتوماسیون','edu.c2b':'طراحی، ساخت و استقرار ربات‌های همیشه‌فعال در پلتفرم‌ها با تحویل امن.','edu.c2meta':'۱۰ ماژول · ۹ ساعت',
+        'edu.c3t':'هوش مصنوعی تولیدی و ارزیابی','edu.c3b':'نظارت، ارزیابی و محافظ‌ها برای اجرای ایجنت‌ها بدون نظارت در مقیاس.','edu.c3meta':'۱۲ ماژول · ۱۱ ساعت',
+        'edu.cohort.t':'کلاس زنده بعدی از ۱۶ تیر آغاز می‌شود','edu.cohort.b':'چهار هفته، جلسات زنده، پروژه‌های واقعی و بازخورد مستقیم از مهندسان ارشد ما. محدود به ۲۰ نفر.','edu.cohort.cta':'رزرو صندلی ←',
+        'ws.kicker':'نمونه‌کارها','ws.title':'کارهای منتخب، تحویل‌شده و سنجیده','ws.sub':'چند نمونه از ایجنت‌ها، سایت‌ها و سیستم‌های رشدی که ساخته‌ایم — همراه با نتایجی که اهمیت داشتند.',
+        'ws.f.all':'همه','ws.f.agents':'ایجنت‌ها','ws.f.web':'وب','ws.f.growth':'رشد','ws.tag.agents':'ایجنت هوش مصنوعی','ws.tag.web':'وب‌سایت و اپ','ws.tag.growth':'سئو و رشد',
+        'ws.1t':'ایجنت پشتیبانی برای نورث‌ویند','ws.1b':'یک ایجنت پشتیبانی خودمختار سطح‌یک متصل به میز کمک و اسناد آن‌ها.','ws.1m1':'تیکت خودکار حل‌شده','ws.1m2':'رضایت حفظ‌شده',
+        'ws.2t':'بازسازی پلتفرم بازاریابی ولتا','ws.2b':'یک سایت هدلس و متمرکز بر تبدیل که در پنج هفته تحویل شد.','ws.2m1':'ترافیک ارگانیک','ws.2m2':'ثبت‌نام',
+        'ws.3t':'موتور محتوای مریدین','ws.3b':'یک خط لوله محتوای دستیار هوش مصنوعی و ویرایش‌انسانی که سئوی تجمیعی ایجاد می‌کند.','ws.3m1':'کلمات کلیدی صفحه‌یک','ws.3m2':'سرنخ ارگانیک',
+        'ws.4t':'کمک‌خلبان تحقیق کوانتا','ws.4b':'یک ایجنت پایتون که تحقیقات داخلی را به‌صورت درخواستی پیش‌نویس و استناد می‌کند.','ws.4m1':'ساعت صرفه‌جویی / تحلیلگر / هفته','ws.4m2':'منابع استنادشده',
+        'ws.5t':'اپ تجارت هلیکسر','ws.5b':'یک فروشگاه سریع با کشف محصول هوش مصنوعی داخلی.','ws.5m1':'بارگذاری میانه','ws.5m2':'میانگین ارزش سفارش',
+        'ws.6t':'اتوماسیون اجتماعی آردنت','ws.6b':'انتشار همیشه‌فعال و ارزیابی دایرکت در چهار پلتفرم.','ws.6m1':'دایرکت واجد شرایط','ws.6m2':'پوشش',
+        'ord.kicker':'شروع پروژه','ord.title':'به ما بگویید چه نیاز دارید','ord.sub':'چند جزئیات سریع و ما ظرف یک روز کاری با یک برنامه و قیمت ثابت برمی‌گردیم.',
+        'ord.l.service':'چه چیزی برایتان بسازیم؟','ord.l.name':'نام شما','ord.l.email':'ایمیل','ord.l.budget':'محدوده بودجه','ord.l.details':'درباره پروژه بگویید',
+        'ord.submit':'ارسال درخواست پروژه','ord.success':'ممنون — درخواست دریافت شد. ظرف یک روز کاری پاسخ می‌دهیم.',
+        'ord.sum.t':'مراحل بعدی','ord.s1t':'بررسی و تعیین دامنه','ord.s1b':'ظرف یک روز کاری.','ord.s2t':'برنامه و قیمت ثابت','ord.s2b':'دامنه، زمان‌بندی و قیمت شفاف.','ord.s3t':'شروع و ساخت','ord.s3b':'نسخه اول در ۲ تا ۴ هفته.',
+        'ord.chat.t':'مطمئن نیستید چه نیاز دارید؟','ord.chat.b':'از دستیار هوش مصنوعی ما بپرسید — می‌تواند فوری ایده‌ها را تعیین دامنه و سوالات را پاسخ دهد.','ord.chat.cta':'گفتگو با هوش مصنوعی',
+        'chat.fab':'گفتگو با هوش مصنوعی','chat.title':'دستیار سای‌تک‌لینک','chat.status':'آنلاین · پاسخ فوری','chat.hello':'سلام! من دستیار سای‌تک‌لینک هستم. درباره ایجنت‌های هوش مصنوعی، وب‌سایت، ربات‌های اجتماعی و سئو بپرسید — یا پروژه‌تان را توصیف کنید تا در تعیین دامنه کمک کنم.','chat.chip1':'یک ایجنت هوش مصنوعی بساز','chat.chip2':'هزینه یک وب‌سایت چقدر است؟'
+      }
+    };
+  }
+
+  setupNavbar() {
+    const bar = this.root.querySelector('[data-navbar]');
+    const onScroll = () => {
+      if (window.scrollY > 24) {
+        bar.style.background = this.themed('rgba(8,17,31,.72)');
+        bar.style.backdropFilter = 'blur(18px)';
+        bar.style.webkitBackdropFilter = 'blur(18px)';
+        bar.style.borderBottomColor = this.themed('rgba(255,255,255,.07)');
+        bar.style.padding = '14px clamp(20px,5vw,72px)';
+      } else {
+        bar.style.background = 'transparent';
+        bar.style.backdropFilter = 'none';
+        bar.style.webkitBackdropFilter = 'none';
+        bar.style.borderBottomColor = 'transparent';
+        bar.style.padding = '22px clamp(20px,5vw,72px)';
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    this._navScroll = onScroll;
+    onScroll();
+    this.root.querySelectorAll('[data-navlink]').forEach(a => {
+      a.addEventListener('mouseenter', () => a.style.color = '#00D9C6');
+      a.addEventListener('mouseleave', () => a.style.color = a.getAttribute('data-active') ? '#00D9C6' : this.themed('#A0AEC0'));
+    });
+  }
+
+  setupResponsive() {
+    this.burger = this.root.querySelector('[data-burger]');
+    this.menu = this.root.querySelector('[data-mobile-menu]');
+    this.navLinks = this.root.querySelector('[data-nav-links]');
+    this.navCta = this.root.querySelector('header [data-magnetic]');
+    this.menuOpen = false;
+    if (this.burger) {
+      this.burger.addEventListener('click', () => {
+        this.menuOpen = !this.menuOpen;
+        this.menu.style.display = this.menuOpen ? 'flex' : 'none';
+      });
+      this.menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        this.menuOpen = false; this.menu.style.display = 'none';
+      }));
+    }
+    this.applyResponsive();
+  }
+
+  applyResponsive() {
+    const w = window.innerWidth;
+    const mobile = w < 860;
+    if (this.navLinks) this.navLinks.style.display = mobile ? 'none' : 'flex';
+    if (this.burger) this.burger.style.display = mobile ? 'flex' : 'none';
+    if (this.navCta) this.navCta.style.display = mobile ? 'none' : 'inline-flex';
+    if (mobile && !this.menuOpen && this.menu) this.menu.style.display = 'none';
+  }
+
+  setupLang() {
+    const btn = this.root.querySelector('[data-lang-toggle]');
+    const label = this.root.querySelector('[data-lang-label]');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      this.lang = this.lang === 'en' ? 'fa' : 'en';
+      const fa = this.lang === 'fa';
+      this.root.dir = fa ? 'rtl' : 'ltr';
+      this.root.style.fontFamily = fa ? "'Vazirmatn',sans-serif" : "'Inter',sans-serif";
+      label.textContent = fa ? 'English' : 'فارسی';
+      this.root.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (fa) {
+          if (!el.hasAttribute('data-en')) el.setAttribute('data-en', el.textContent);
+          const t = this.dict.fa[key];
+          if (t) el.textContent = t;
+        } else {
+          if (el.hasAttribute('data-en')) el.textContent = el.getAttribute('data-en');
+        }
+      });
+      this.root.querySelectorAll('h1,h2,h3,h4,[data-font-head]').forEach(el => {
+        el.style.fontFamily = fa ? "'Vazirmatn',sans-serif" : "'Sora',sans-serif";
+      });
+      if (this._cGo) this._cGo(this.cIdx);
+    });
+  }
+
+  revealEl(el) {
+    if (el.getAttribute('data-shown')) return;
+    el.setAttribute('data-shown', '1');
+    const d = parseFloat(el.getAttribute('data-reveal-delay') || '0');
+    el.style.transitionDelay = d + 'ms';
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  }
+
+  setupReveal() {
+    const els = [...this.root.querySelectorAll('[data-reveal]')];
+    if (this.reduced) { els.forEach(e => this.revealEl(e)); return; }
+    els.forEach(e => {
+      e.style.opacity = '0';
+      e.style.transform = 'translateY(34px)';
+      e.style.transition = 'opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)';
+    });
+    const check = () => {
+      const vh = window.innerHeight || 800;
+      els.forEach(e => {
+        if (e.getAttribute('data-shown')) return;
+        const r = e.getBoundingClientRect();
+        if (r.top < vh * 0.92 && r.bottom > 0) this.revealEl(e);
+      });
+    };
+    // Primary: IntersectionObserver (when available/firing)
+    try {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if (en.isIntersecting) { this.revealEl(en.target); io.unobserve(en.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(e => io.observe(e));
+    } catch (e) {}
+    // Resilient fallbacks: scroll/resize + a failsafe so content never stays hidden
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check, { passive: true });
+    check();
+    requestAnimationFrame(check);
+    setTimeout(check, 300);
+    setTimeout(() => els.forEach(e => this.revealEl(e)), 1200);
+  }
+
+  setupMagnetic() {
+    if (this.reduced) return;
+    this.root.querySelectorAll('[data-magnetic]').forEach(el => {
+      el.addEventListener('mousemove', (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * 0.25;
+        const y = (e.clientY - r.top - r.height / 2) * 0.3;
+        el.style.transform = `translate(${x}px,${y}px)`;
+      });
+      el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
+    });
+  }
+
+  setupCounters() {
+    const els = [...this.root.querySelectorAll('[data-count]')];
+    if (!els.length) return;
+    const check = () => {
+      const vh = window.innerHeight || 800;
+      els.forEach(e => {
+        if (e.getAttribute('data-counted')) return;
+        const r = e.getBoundingClientRect();
+        if (r.top < vh * 0.85 && r.bottom > 0) this.animateCount(e);
+      });
+    };
+    try {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if (en.isIntersecting) { this.animateCount(en.target); io.unobserve(en.target); } });
+      }, { threshold: 0.5 });
+      els.forEach(e => io.observe(e));
+    } catch (e) {}
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check, { passive: true });
+    check();
+    setTimeout(check, 300);
+    setTimeout(() => els.forEach(e => this.animateCount(e)), 1400);
+  }
+
+  setupTabs() {
+    const tabs = [...this.root.querySelectorAll('[data-tab]')];
+    const panels = [...this.root.querySelectorAll('[data-panel]')];
+    if (!tabs.length) return;
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const i = tab.getAttribute('data-tab');
+        tabs.forEach(t => {
+          const active = t === tab;
+          t.style.background = active ? 'rgba(0,217,198,.1)' : this.themed('rgba(255,255,255,.02)');
+          t.style.borderColor = active ? 'rgba(0,217,198,.3)' : this.themed('rgba(255,255,255,.08)');
+          t.style.color = active ? this.themed('#fff') : this.themed('#A0AEC0');
+          const dot = t.querySelector('span');
+          if (dot) dot.style.background = active ? '#00D9C6' : 'rgba(255,255,255,.2)';
+        });
+        panels.forEach(p => {
+          const show = p.getAttribute('data-panel') === i;
+          p.style.display = show ? 'flex' : 'none';
+          if (show && !this.reduced) {
+            p.style.animation = 'none';
+            void p.offsetWidth;
+            p.style.animation = 'ctlUp .5s cubic-bezier(.22,1,.36,1)';
+          }
+        });
+      });
+    });
+  }
+
+  setupImgZoom() {
+    if (this.reduced) return;
+    this.root.querySelectorAll('[data-imgzoom]').forEach(el => {
+      el.addEventListener('mouseenter', () => { el.style.transform = 'scale(1.04) rotate(-.4deg)'; });
+      el.addEventListener('mouseleave', () => { el.style.transform = 'scale(1) rotate(0)'; });
+    });
+    this.root.querySelectorAll('[data-marquee] span').forEach(s => {
+      s.addEventListener('mouseenter', () => { s.style.opacity = '1'; s.style.color = '#2CF5E4'; });
+      s.addEventListener('mouseleave', () => { s.style.opacity = '.5'; s.style.color = '#fff'; });
+    });
+  }
+
+  setupCarousel() {
+    const track = this.root.querySelector('[data-carousel-track]');
+    if (!track) return;
+    const slides = track.querySelectorAll('[data-slide]');
+    const dots = [...this.root.querySelectorAll('[data-dot]')];
+    this.cIdx = 0;
+    const go = (i) => {
+      this.cIdx = (i + slides.length) % slides.length;
+      const rtl = this.lang === 'fa';
+      track.style.transform = `translateX(${(rtl ? 1 : -1) * this.cIdx * 100}%)`;
+      dots.forEach((d, di) => {
+        const active = di === this.cIdx;
+        d.style.width = active ? '30px' : '9px';
+        d.style.background = active ? '#00D9C6' : 'rgba(255,255,255,.2)';
+      });
+    };
+    dots.forEach((d, di) => d.addEventListener('click', () => { go(di); this.restartCarousel(go, slides.length); }));
+    this.restartCarousel = (gofn, n) => {
+      clearInterval(this._cTimer);
+      if (this.reduced || this.props.autoplayTestimonials === false) return;
+      this._cTimer = setInterval(() => gofn(this.cIdx + 1), 5000);
+    };
+    this._cGo = go;
+    this.restartCarousel(go, slides.length);
+  }
+
+  setupAccordion() {
+    this.root.querySelectorAll('[data-acc]').forEach(acc => {
+      const btn = acc.querySelector('[data-acc-btn]');
+      const body = acc.querySelector('[data-acc-body]');
+      const icon = acc.querySelector('[data-acc-icon]');
+      const vbar = icon.querySelectorAll('span')[1];
+      btn.addEventListener('click', () => {
+        const open = body.style.maxHeight && body.style.maxHeight !== '0px';
+        this.root.querySelectorAll('[data-acc]').forEach(other => {
+          if (other !== acc) {
+            other.querySelector('[data-acc-body]').style.maxHeight = '0px';
+            other.style.borderColor = this.themed('rgba(255,255,255,.08)');
+            const oi = other.querySelector('[data-acc-icon]');
+            oi.style.transform = 'rotate(0deg)';
+            oi.querySelectorAll('span')[1].style.opacity = '1';
+          }
+        });
+        if (open) {
+          body.style.maxHeight = '0px';
+          acc.style.borderColor = this.themed('rgba(255,255,255,.08)');
+          icon.style.transform = 'rotate(0deg)';
+          vbar.style.opacity = '1';
+        } else {
+          body.style.maxHeight = body.scrollHeight + 'px';
+          acc.style.borderColor = 'rgba(0,217,198,.35)';
+          icon.style.transform = 'rotate(90deg)';
+          vbar.style.opacity = '0';
+        }
+      });
+    });
+  }
+
+  setupFootLinks() {
+    this.root.querySelectorAll('[data-footlink]').forEach(a => {
+      a.addEventListener('mouseenter', () => a.style.color = '#00D9C6');
+      a.addEventListener('mouseleave', () => a.style.color = this.themed(a.style.fontSize === '13px' ? '#5b6b82' : '#A0AEC0'));
+    });
+  }
+
+  setupRouter() {
+    this.currentPage = 'home';
+    const handler = (target) => {
+      const parts = String(target).split('#');
+      const page = parts[0] || 'home';
+      const anchor = parts[1];
+      this.root.querySelectorAll('[data-page]').forEach(p => {
+        p.style.display = (p.getAttribute('data-page') === page) ? 'block' : 'none';
+      });
+      this.currentPage = page;
+      const pageEl = this.root.querySelector('[data-page="' + page + '"]');
+      if (pageEl) this.revealPage(pageEl);
+      this.setActiveNav(page);
+      if (this.menu) { this.menuOpen = false; this.menu.style.display = 'none'; }
+      requestAnimationFrame(() => {
+        if (anchor) {
+          const a = this.root.querySelector('#' + anchor);
+          window.scrollTo({ top: a ? a.getBoundingClientRect().top + window.scrollY - 70 : 0, behavior: 'auto' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'auto' });
+        }
+      });
+    };
+    this.navigate = handler;
+    this.root.querySelectorAll('[data-goto]').forEach(el => {
+      el.addEventListener('click', (e) => { e.preventDefault(); handler(el.getAttribute('data-goto')); });
+    });
+    this.root.querySelectorAll('[data-goto-order]').forEach(el => {
+      el.addEventListener('click', (e) => { e.preventDefault(); handler('order'); });
+    });
+    const logo = this.root.querySelector('header a[href="#top"]');
+    if (logo) logo.addEventListener('click', (e) => { e.preventDefault(); handler('home'); });
+    this.setActiveNav('home');
+  }
+
+  setActiveNav(page) {
+    this.root.querySelectorAll('[data-navlink]').forEach(a => {
+      const base = (a.getAttribute('data-goto') || '').split('#')[0];
+      const on = base === page;
+      a.style.color = on ? '#00D9C6' : this.themed('#A0AEC0');
+      a.setAttribute('data-active', on ? '1' : '');
+    });
+  }
+
+  revealPage(pageEl) {
+    const els = [...pageEl.querySelectorAll('[data-reveal]')];
+    if (this.reduced) { els.forEach(e => this.revealEl(e)); }
+    else {
+      els.forEach(e => { e.removeAttribute('data-shown'); e.style.opacity = '0'; e.style.transform = 'translateY(28px)'; });
+      requestAnimationFrame(() => requestAnimationFrame(() => els.forEach(e => this.revealEl(e))));
+    }
+    pageEl.querySelectorAll('[data-count]').forEach(e => { e.removeAttribute('data-counted'); this.animateCount(e); });
+  }
+
+transformStyle(str, toLight) {
+    // Comprehensive Hex Map for Connectr Talent Tech Light Mode
+    const hexF = {
+      '#fff':'#111827', '#FFFFFF':'#111827',     // White text/icons -> Dark Slate
+      '#04121A':'#FFFFFF',                       // Dark text on buttons -> White text on green
+      '#D9E2EC':'#374151',                       // Main text -> Medium Slate
+      '#A0AEC0':'#6B7280',                       // Subtext -> Slate 500
+      '#5b6b82':'#9CA3AF',                       // Muted/Borders -> Slate 400
+      '#050B14':'#FFFFFF',                       // Main BG -> Pure White
+      '#08111F':'#F9FAFB',                       // Dark panels -> Off-white (Gray 50)
+      '#0D1320':'#F3F4F6',                       // Nested panels -> Light Gray (Gray 100)
+      '#101A2B':'#F9FAFB',                       // Cards -> Off-white
+      '#172338':'#FFFFFF',                       // Raised cards -> Pure White
+      '#00D9C6':'#10B981',                       // Primary Cyan -> Connectr Emerald Green
+      '#00B8D4':'#059669',                       // Secondary Cyan -> Connectr Dark Green
+      '#2CF5E4':'#34D399'                        // Highlight Cyan -> Connectr Light Green
+    };
+    
+    const hexR = {}; Object.keys(hexF).forEach(k => { if (!(hexF[k] in hexR)) hexR[hexF[k]] = k; });
+    const hex = toLight ? hexF : hexR;
+    str = str.replace(/#[0-9a-fA-F]{6}\b|#[0-9a-fA-F]{3}\b/g, (m) => hex[m] || hex[m.toUpperCase()] || hex[m.toLowerCase()] || m);
+
+    // Comprehensive RGB/RGBA Map for transparent overlays and shadows
+    const triF = {
+      '255,255,255':'17,24,39',       // Whites (borders, overlays, text) -> Dark Slate
+      '217,226,236':'55,65,81',       // Main text
+      '160,174,192':'107,114,128',    // Subtext
+      '91,107,130':'156,163,175',     // Muted
+      '5,11,20':'255,255,255',        // Main BG -> White
+      '8,17,31':'249,250,251',        // Panels -> Off-white
+      '13,19,32':'243,244,246',       // Nested panels -> Light Gray
+      '16,26,43':'249,250,251',       // Cards -> Off-white
+      '23,35,56':'255,255,255',       // Raised cards -> White
+      '0,217,198':'16,185,129',       // Primary Connectr Green
+      '0,184,212':'5,150,105',        // Secondary Connectr Green
+      '44,245,228':'52,211,153'       // Highlight Connectr Green
+    };
+    
+    const triR = {};
+    Object.keys(triF).forEach(k => { if (!(triF[k] in triR)) triR[triF[k]] = k; });
+    const tri = toLight ? triF : triR;
+    str = str.replace(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+)\s*)?\)/g, (m, r, g, b, a) => {
+      const k = r + ',' + g + ',' + b;
+      if (!tri[k]) return m;
+      return (a !== undefined && a !== '') ? 'rgba(' + tri[k] + ',' + a + ')' : 'rgb(' + tri[k] + ')';
+    });
+    return str;
+  }
+
+  themed(v) { return this.theme === 'light' ? this.transformStyle(v, true) : v; }
+
+  setupTheme() {
+    this.theme = 'dark';
+    const btn = this.root.querySelector('[data-theme-toggle]');
+    const icon = this.root.querySelector('[data-theme-icon]');
+    if (!btn) return;
+    btn.addEventListener('click', () => this.applyTheme(this.theme === 'dark' ? 'light' : 'dark'));
+    this.applyThemeIcon = () => { if (icon) icon.textContent = this.theme === 'light' ? '\u263E' : '\u2600'; };
+  }
+
+applyTheme(t) {
+    if (t === this.theme) return;
+    const toLight = (t === 'light');
+    const els = [...this.root.querySelectorAll('[style]')];
+    if (this.root.hasAttribute('style')) els.unshift(this.root);
+    els.forEach(el => {
+      const s = el.getAttribute('style');
+      if (s) el.setAttribute('style', this.transformStyle(s, toLight));
+    });
+    this.theme = t;
+    
+    // Force the page background to pure white for light mode
+    document.documentElement.style.background = toLight ? '#FFFFFF' : '';
+    document.body.style.background = toLight ? '#FFFFFF' : '#050B14';
+    document.body.style.backgroundColor = toLight ? '#FFFFFF' : '';
+    if (this.root) this.root.style.background = toLight ? '#FFFFFF' : '#050B14';
+    
+    const header = this.root.querySelector('header[data-navbar]') || this.root.querySelector('header');
+    if (header) {
+      header.style.background = toLight ? 'rgba(255, 255, 255, 0.95)' : '';
+      header.style.backdropFilter = toLight ? 'blur(24px)' : '';
+      header.style.borderBottomColor = toLight ? 'rgba(17, 24, 39, 0.08)' : 'transparent';
+    }
+    
+    if (this.applyThemeIcon) this.applyThemeIcon();
+    this.setActiveNav(this.currentPage || 'home');
+  }
+  setupChat() {
+    const fab = this.root.querySelector('[data-chat-fab]');
+    const panel = this.root.querySelector('[data-chat-panel]');
+    const close = this.root.querySelector('[data-chat-close]');
+    const input = this.root.querySelector('[data-chat-input]');
+    const send = this.root.querySelector('[data-chat-send]');
+    this._chatLog = this.root.querySelector('[data-chat-log]');
+    this.chatHistory = [];
+    if (!panel) return;
+    const open = () => { panel.style.display = 'flex'; if (fab) fab.style.display = 'none'; setTimeout(() => input && input.focus(), 120); };
+    const closeFn = () => { panel.style.display = 'none'; if (fab) fab.style.display = 'inline-flex'; };
+    if (fab) {
+      fab.addEventListener('click', open);
+      if (!this.reduced) {
+        fab.addEventListener('mouseenter', () => fab.style.transform = 'translateY(-3px)');
+        fab.addEventListener('mouseleave', () => fab.style.transform = 'translateY(0)');
+      }
+    }
+    if (close) close.addEventListener('click', closeFn);
+    this.root.querySelectorAll('[data-open-chat]').forEach(b => b.addEventListener('click', open));
+    const submit = () => { const v = (input.value || '').trim(); if (!v) return; input.value = ''; this.sendChat(v); };
+    if (send) send.addEventListener('click', submit);
+    if (input) input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); submit(); } });
+    this.root.querySelectorAll('[data-chat-chip]').forEach(c => c.addEventListener('click', () => this.sendChat(c.textContent.trim())));
+  }
+
+  addChatMsg(role, text) {
+    const log = this._chatLog;
+    const el = document.createElement('div');
+    el.setAttribute('data-chat-msg', role);
+    if (role === 'user') {
+      el.style.cssText = 'align-self:flex-end;max-width:85%;background:linear-gradient(135deg,#00D9C6,#00B8D4);color:#04121A;border-radius:14px 14px 4px 14px;padding:12px 14px;font-size:14px;line-height:1.55;font-weight:500;';
+    } else {
+      el.style.cssText = 'align-self:flex-start;max-width:85%;background:' + this.themed('rgba(255,255,255,.05)') + ';border:1px solid ' + this.themed('rgba(255,255,255,.08)') + ';color:' + this.themed('#D9E2EC') + ';border-radius:14px 14px 14px 4px;padding:12px 14px;font-size:14px;line-height:1.55;white-space:pre-wrap;';
+    }
+    el.textContent = text;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+    return el;
+  }
+
+async sendChat(text) {
+    // نمایش پیام کاربر در UI
+    this.addChatMsg('user', text);
+    this.chatHistory.push({ role: 'user', content: text });
+    
+    // نمایش انیمیشن در حال تایپ
+    const typing = this.addChatMsg('bot', '·');
+    let n = 0;
+    const ti = setInterval(() => { n = (n % 3) + 1; typing.textContent = '·'.repeat(n); }, 320);
+    
+    try {
+      // ⚠️ کلید API خود را اینجا قرار دهید ⚠️
+      const API_KEY = 'AQ.Ab8RN6LXjfnOFuX7DVuUKjLyaCNcKiAPe8aEzwSJR0XqECqvjg'; 
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+
+      // دستورالعمل‌های شخصیت ربات
+      const sys = "You are the CyTechLink assistant. CyTechLink is a studio that designs, builds and runs AI agents, websites & web apps, social-media bots, and SEO. Be concise, warm and genuinely helpful. Keep replies under 50 words.";
+      const langRule = this.lang === 'fa' ? 'Reply ONLY in Persian (فارسی).' : 'Reply in English.';
+      
+      // تبدیل تاریخچه پیام‌ها به فرمت گوگل
+      const geminiContents = this.chatHistory.map(msg => ({
+        role: msg.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: msg.content }]
+      }));
+
+      // ارسال درخواست مستقیم به گوگل
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          systemInstruction: { parts: [{ text: `${sys} ${langRule}` }] },
+          contents: geminiContents,
+          generationConfig: { maxOutputTokens: 150, temperature: 0.7 }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const reply = data.candidates[0].content.parts[0].text.trim();
+
+      // پایان انیمیشن و نمایش پیام ربات
+      clearInterval(ti);
+      typing.textContent = reply;
+      this.chatHistory.push({ role: 'assistant', content: reply });
+      
+    } catch (e) {
+      console.error('Chat error:', e);
+      clearInterval(ti);
+      typing.textContent = this.lang === 'fa' 
+        ? 'متاسفم، خطایی در اتصال رخ داد. لطفاً دوباره تلاش کنید.' 
+        : 'Sorry — something went wrong. Please try again.';
+    }
+    
+    // اسکرول خودکار به پایین
+    this._chatLog.scrollTop = this._chatLog.scrollHeight;
+  }
+  setupWorkFilter() {
+    const btns = [...this.root.querySelectorAll('[data-wsf]')];
+    const cards = [...this.root.querySelectorAll('[data-wscat]')];
+    if (!btns.length) return;
+    btns.forEach(b => b.addEventListener('click', () => {
+      const f = b.getAttribute('data-wsf');
+      btns.forEach(x => {
+        const on = x === b;
+        x.style.background = on ? 'rgba(0,217,198,.1)' : this.themed('rgba(255,255,255,.02)');
+        x.style.borderColor = on ? 'rgba(0,217,198,.3)' : this.themed('rgba(255,255,255,.08)');
+        x.style.color = on ? this.themed('#fff') : this.themed('#A0AEC0');
+      });
+      cards.forEach(c => { c.style.display = (f === 'all' || c.getAttribute('data-wscat') === f) ? 'block' : 'none'; });
+    }));
+  }
+
+  setupOrderForm() {
+    const setGroup = (sel, attr, store) => {
+      const btns = [...this.root.querySelectorAll(sel)];
+      btns.forEach(b => b.addEventListener('click', () => {
+        btns.forEach(x => {
+          const on = x === b;
+          x.style.background = on ? 'rgba(0,217,198,.1)' : this.themed('rgba(255,255,255,.02)');
+          x.style.borderColor = on ? 'rgba(0,217,198,.3)' : this.themed('rgba(255,255,255,.1)');
+          x.style.color = on ? this.themed('#fff') : this.themed('#A0AEC0');
+          const dot = x.querySelector('span'); if (dot && dot.style.borderRadius === '50%') dot.style.background = on ? '#00D9C6' : 'rgba(255,255,255,.2)';
+        });
+        this[store] = b.getAttribute(attr);
+      }));
+    };
+    setGroup('[data-oservice]', 'data-oservice', 'orderService');
+    setGroup('[data-obudget]', 'data-obudget', 'orderBudget');
+    const submit = this.root.querySelector('[data-order-submit]');
+    const success = this.root.querySelector('[data-order-success]');
+    if (submit) submit.addEventListener('click', () => { if (success) success.style.display = 'flex'; });
+  }
+
+  animateCount(el) {
+    el.setAttribute('data-counted', '1');
+    const target = parseFloat(el.getAttribute('data-count'));
+    const suffix = el.getAttribute('data-suffix') || '';
+    const prefix = el.getAttribute('data-prefix') || '';
+    const dec = (el.getAttribute('data-count').indexOf('.') > -1) ? 1 : 0;
+    if (this.reduced) { el.textContent = prefix + target + suffix; return; }
+    const dur = 1600; const start = performance.now();
+    const step = (now) => {
+      const p = Math.min((now - start) / dur, 1);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = prefix + (target * e).toFixed(dec) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = prefix + target.toFixed(dec) + suffix;
+    };
+    requestAnimationFrame(step);
+  }
+}
 </script>
 </body>
 </html>
